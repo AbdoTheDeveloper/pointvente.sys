@@ -9,14 +9,17 @@
                 display: none;
             }
         }
+
         @media print {
             body * {
                 visibility: hidden;
             }
+
             #printSection,
             #printSection * {
                 visibility: visible;
             }
+
             #printSection {
                 position: absolute;
                 left: 0;
@@ -24,9 +27,11 @@
                 height: 1000px;
             }
         }
+
         .main-panel {
             width: 100% !important;
         }
+
         .slider {
             -webkit-appearance: none;
             width: 100%;
@@ -38,6 +43,7 @@
             -webkit-transition: .2s;
             transition: opacity .2s;
         }
+
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -47,6 +53,7 @@
             background: #4CAF50;
             cursor: pointer;
         }
+
         .slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
@@ -54,6 +61,7 @@
             background: #4CAF50;
             cursor: pointer;
         }
+
         .dark-edition .form-control,
         .is-focused .dark-edition .form-control {
             background-image: linear-gradient(0deg,
@@ -72,42 +80,52 @@
                         71%,
                         0) 0) !important;
         }
+
         .ticketBtn {
             padding: 10px !important;
         }
+
         hr {
             margin-top: 0rem;
             margin-bottom: 0rem;
             border: 0;
             border-top: 1px solid rgba(0, 0, 0, .1)
         }
+
         .click_btn:hover {
             background: #2196F3;
         }
+
         .click_btn.active {
             background: #2196F3;
         }
+
         .suprimerart:hover {
             outline: -webkit-focus-ring-color auto 1px;
             cursor: pointer;
         }
+
         .suh5 {
             margin: 0 !important;
             padding: 10px 5px;
         }
+
         .wrapper {
             margin: 0 auto;
             position: relative;
             z-index: 1;
             overflow: hidden;
         }
+
         .modal-backdrop {
             display: none !important;
         }
+
         #KioskBoard-VirtualKeyboard.kioskboard-theme-light,
         #KioskBoard-VirtualKeyboard.kioskboard-theme-material {
             background: #D3D3D379 !important
         }
+
         .cursorpointer {
             cursor: pointer;
         }
@@ -619,6 +637,7 @@
                 .wp {
                     font-size: .8rem;
                 }
+
                 .wp h2 {
                     font-size: 1.2rem;
                 }
@@ -688,6 +707,7 @@
                 .wp {
                     font-size: .8rem;
                 }
+
                 .wp h2 {
                     font-size: 1.2rem;
                 }
@@ -824,6 +844,7 @@
             var remise_tot = 0;
             var remise_max;
             var totalTicketDHSansRemise = 0;
+
             function settickt(arraytick, data, body_ticket = "#body_ticket", total_ticket = "#total_ticket") {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : 0;
                 var inserted_remise = $("#remise").val() ? $("#remise").val() : 0;
@@ -862,7 +883,8 @@
                                 var newqte = 0;
                                 var prix_sans_remise = 0;
                                 if (data.uniteog == "kg") {
-                                    if (data.unite == "kg") {           $(body_ticket).html('');
+                                    if (data.unite == "kg") {
+                                        $(body_ticket).html('');
                                         newqte = parseFloat(data.qte);
                                         newprix += parseFloat(data.prix) * parseFloat(data.qte);
                                     } else {
@@ -884,6 +906,7 @@
                                     remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
                                         100).toFixed(2);
                                     prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+
                                 }
                                 if (localStorage.getItem("isRetour")) {
                                     console.log("is retour")
@@ -895,8 +918,8 @@
                                         unite: data.uniteog,
                                         type_prod: data.type_prod,
                                         prix_sans_remise: prix_sans_remise,
-                                        max_remise: remise , 
-                                        code_bar : data.code_bar
+                                        max_remise: remise,
+                                        code_bar: data.code_bar
                                     });
                                 } else {
                                     console.log("is not retour")
@@ -908,8 +931,8 @@
                                         unite: data.uniteog,
                                         type_prod: data.type_prod,
                                         prix_sans_remise: prix_sans_remise,
-                                        max_remise: remise , 
-                                        code_bar : data.code_bar
+                                        max_remise: remise,
+                                        code_bar: data.code_bar
                                     });
                                 }
                             } else {
@@ -1003,11 +1026,11 @@
                             $(total_ticket).html(
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDHSansRemise.toFixed(2)} DH</p></h2>` +
                                 `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>`
-                                );
+                            );
                             $("#Remise_ticket").html(
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>` +
                                 `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>`
-                                );
+                            );
                             document.querySelectorAll('.calculated-price').forEach(x => x.classList.add(
                                 'd-none'))
                             document.querySelectorAll('.calculated-price').forEach(x => x.classList.add(
@@ -1018,11 +1041,11 @@
                             $(total_ticket).html(
                                 `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>` +
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDHSansRemise.toFixed(2)} DH</p></h2>`
-                                );
+                            );
                             $("#Remise_ticket").html(
                                 `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>` +
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>`
-                                );
+                            );
                             console.log(totalTicketDH)
                             document.querySelectorAll('.calculated-price').forEach(x => x.classList.remove(
                                 'd-none'))
@@ -1089,8 +1112,8 @@
                                     qte: -newqte,
                                     name: data.name,
                                     unite: data.uniteog,
-                                    type_prod: data.type_prod , 
-                                    code_bar : data.code_bar
+                                    type_prod: data.type_prod,
+                                    code_bar: data.code_bar
                                 });
                             } else {
                                 arraytick.push({
@@ -1099,8 +1122,8 @@
                                     qte: newqte,
                                     name: data.name,
                                     unite: data.uniteog,
-                                    type_prod: data.type_prod ,
-                                    code_bar : data.code_bar
+                                    type_prod: data.type_prod,
+                                    code_bar: data.code_bar
                                 });
                             }
                             //console.log("Here=>" , arraytick);
@@ -1149,31 +1172,45 @@
                     } else {
                         totalTicketDH = 0;
                         $.each(arraytick, function(index, val) {
-                            poids = arraytick[index].code_bar.slice(5,)  ; 
-                            if ( arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith("21"))  {
-                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index].prix * (( poids * arraytick[index].qte) / 1000)) );
-                            }else if(arraytick[index].unite == "g" && arraytick[index].code_bar.startsWith("21")){
-                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index].prix * poids));
-                            }else {
+                            if (arraytick[index.code_bar]) {
+                                poids = arraytick[index].code_bar.slice(7, 12);
+                                if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith(
+                                        "21") && arraytick[index].code_bar.length > 7) {
+                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                                        .prix * ((poids * arraytick[index].qte) / 1000)));
+                                } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
+                                    .startsWith("21") && arraytick[index].code_bar.length > 7) {
+                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                                        .prix * poids));
+                                }
+                            }else{
                                 totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
                             }
+
+
+
+                            
+
                         });
 
-                        $.each(arraytick, function(key, value) { 
-
-                            poids = value.code_bar.slice(5,)  ; 
-                            if ( value.unite == "kg" && value.code_bar.startsWith("21"))  {
-                                value.qte  = ( poids * value.qte) / 1000
-
-
-                            }else if(value.unite == "g" && value.code_bar.startsWith("21")){
-                                value.qte  = (poids * value.qte)
-                            }   
-                            
+                        $.each(arraytick, function(key, value) {
+                            if(value.code_bar){if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar.length > 7) {
+                                poids = 0;
+                                poids = value.code_bar.slice(7, 12);
+                                quantité = (value.qte * poids) / 1000
+                            } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
+                                .code_bar.length > 7) {
+                                poids = 0;
+                                poids = value.code_bar.slice(7, 12);
+                                quantité = value.qte * poids;
+                            } 
+                        }else {
+                            quantité = value.qte
+                        }
                             $(body_ticket).append(`
 										<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
 											<div class='wp'> ${value.name}</div>
-											<div class='wp'> x ${value.qte.toFixed(2)} </div>
+											<div class='wp'> x ${quantité.toFixed(2)} </div>
 											<div class='wp'>${value.prix.toFixed(2)}  </div>
 											<div class='wp'>${0}</div>
 										</div>`);
@@ -1190,7 +1227,7 @@
                         $(total_ticket).html(
                             `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>` +
                             `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>`
-                            );
+                        );
                         document.querySelectorAll('.calculated-price').forEach(x => x.classList.remove('d-none'))
                         document.querySelectorAll('.offer-price').forEach(x => x.classList.add('d-none'));
                     }
@@ -1198,112 +1235,112 @@
                     changeRemise();
                 }
             }
-//             function settickt(arraytick, data, body_ticket = "#body_ticket", total_ticket = "#total_ticket") {
+            //             function settickt(arraytick, data, body_ticket = "#body_ticket", total_ticket = "#total_ticket") {
 
-// $(body_ticket).html('');
+            // $(body_ticket).html('');
 
-// var is_exist = false;
-// var i = 0;
-// if (data) {
-
-
-// $.each(arraytick, function (key, value) {
-//     console.log(key)
-//     if (data.id == value.idProd) {
-//         is_exist = true;
-//         i = key;
-//         return;
-//     }
-// });
+            // var is_exist = false;
+            // var i = 0;
+            // if (data) {
 
 
-// if (!is_exist) {
-
-//     var newprix = 0;
-//     var newqte = 0;
-
-
-//     if (data.uniteog == "kg") {
-
-//         if (data.unite == "kg") {
-//             newqte = parseFloat(data.qte);
-//             newprix += parseFloat(data.prix) * parseFloat(data.qte);
-//         } else {
-//             newqte = parseFloat(data.qte) / 1000;
-//             newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
-//         }
-
-//     } else if (data.uniteog == "g") {
-//         if (data.unite == "kg") {
-//             newqte = parseFloat(data.qte) * 1000;
-//             newprix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
-//         } else {
-//             newqte = parseFloat(data.qte);
-//             newprix += parseFloat(data.prix) * (parseFloat(data.qte));
-//         }
-//     } else {
-//         newqte = parseFloat(data.qte);
-//         newprix = parseFloat(data.prix) * parseFloat(data.qte);
-//     }
-
-//     arraytick.push({
-//         idProd: data.id,
-//         prix: newprix,
-//         qte: newqte,
-//         name: data.name,
-//         unite: data.uniteog,
-//     });
-// } else {
-
-//     if (arraytick[i].unite == "kg") {
-
-//         if (data.unite == "kg") {
-//             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
-//             arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
-//         } else {
-//             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) / 1000;
-//             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
-//         }
-
-//     } else if (arraytick[i].unite == "g") {
-//         if (data.unite == "kg") {
-//             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) * 1000;
-//             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
-//         } else {
-//             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
-//             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte));
-//         }
-//     } else {
-//         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
-//         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
-//     }
-
-// }
-
-// }
-
-// totalTicketDH = 0;
-// $.each(arraytick, function (index, val) {
-//     totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
-// });
+            // $.each(arraytick, function (key, value) {
+            //     console.log(key)
+            //     if (data.id == value.idProd) {
+            //         is_exist = true;
+            //         i = key;
+            //         return;
+            //     }
+            // });
 
 
-// $.each(arraytick, function (key, value) {
-//     $(body_ticket).append(`
-//                         <div class='info clearfix suprimerart' data-id="${value.idProd}">
-//                             <div class='wp'> ${value.name}</div>
-//                             <div class='wp'> x ${value.qte.toFixed(2)} / ${value.unite}</div>
-//                             <div class='wp'>${value.prix.toFixed(2)} DH</div>
-//                         </div>`);
+            // if (!is_exist) {
 
-// });
+            //     var newprix = 0;
+            //     var newqte = 0;
 
-// $('#total_a_payer').val(totalTicketDH);
 
-// $(total_ticket).html(`<h2>Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>`);
-// changeReste();
-// changeRemise();	
-// }
+            //     if (data.uniteog == "kg") {
+
+            //         if (data.unite == "kg") {
+            //             newqte = parseFloat(data.qte);
+            //             newprix += parseFloat(data.prix) * parseFloat(data.qte);
+            //         } else {
+            //             newqte = parseFloat(data.qte) / 1000;
+            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
+            //         }
+
+            //     } else if (data.uniteog == "g") {
+            //         if (data.unite == "kg") {
+            //             newqte = parseFloat(data.qte) * 1000;
+            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
+            //         } else {
+            //             newqte = parseFloat(data.qte);
+            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte));
+            //         }
+            //     } else {
+            //         newqte = parseFloat(data.qte);
+            //         newprix = parseFloat(data.prix) * parseFloat(data.qte);
+            //     }
+
+            //     arraytick.push({
+            //         idProd: data.id,
+            //         prix: newprix,
+            //         qte: newqte,
+            //         name: data.name,
+            //         unite: data.uniteog,
+            //     });
+            // } else {
+
+            //     if (arraytick[i].unite == "kg") {
+
+            //         if (data.unite == "kg") {
+            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+            //             arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+            //         } else {
+            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) / 1000;
+            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
+            //         }
+
+            //     } else if (arraytick[i].unite == "g") {
+            //         if (data.unite == "kg") {
+            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) * 1000;
+            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
+            //         } else {
+            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte));
+            //         }
+            //     } else {
+            //         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+            //         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+            //     }
+
+            // }
+
+            // }
+
+            // totalTicketDH = 0;
+            // $.each(arraytick, function (index, val) {
+            //     totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
+            // });
+
+
+            // $.each(arraytick, function (key, value) {
+            //     $(body_ticket).append(`
+        //                         <div class='info clearfix suprimerart' data-id="${value.idProd}">
+        //                             <div class='wp'> ${value.name}</div>
+        //                             <div class='wp'> x ${value.qte.toFixed(2)} / ${value.unite}</div>
+        //                             <div class='wp'>${value.prix.toFixed(2)} DH</div>
+        //                         </div>`);
+
+            // });
+
+            // $('#total_a_payer').val(totalTicketDH);
+
+            // $(total_ticket).html(`<h2>Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>`);
+            // changeReste();
+            // changeRemise();	
+            // }
             $('body').on('click', ".easy-get", () => {
                 show_easy_numpad();
             });
@@ -1346,7 +1383,7 @@
                 var cat_nom = $(this).data('nom');
                 $(".cat").removeClass('active');
                 $(this).addClass('active');
-                console.log(cat_nom);	
+                console.log(cat_nom);
                 $.ajax({
                     url: "{{ route('trav.get_articles.bycat') }}",
                     type: 'get',
@@ -1414,7 +1451,8 @@
                         var prix = $('#prixmodel').val(data.prix);
                         var name = $('#artmodel').val(data.name);
                         var name = $('#uniteogmodel').val(data.unite);
-                        $('#exampleModalCenterTitlemyModalUnite').html(`${data.name} : ${qteact} / ${data.unite}`)
+                        $('#exampleModalCenterTitlemyModalUnite').html(
+                            `${data.name} : ${qteact} / ${data.unite}`)
                         $('#myModalUnite').appendTo("body").modal('show');
                     }
                 } else {
@@ -1941,8 +1979,7 @@
                             }
                         });
                     },
-                    error: function(values) {
-                    }
+                    error: function(values) {}
                 });
             });
             ///@@@@@@@@@@@@@@@@@@ Imprimer_Cloturage @@@@@@@@@@@
@@ -1953,8 +1990,7 @@
                     success: function(data) {
                         PrintDiv(data);
                     },
-                    error: function(values) {
-                    }
+                    error: function(values) {}
                 });
             });
             $("body").on('click', '.showtickdetail', function(e) {
@@ -2009,7 +2045,7 @@
                             Swal.fire({
                                 title: 'votre cloturage est',
                                 text: 'Total : ' + (data.montant - data
-                                    .montant_offert) + ' , Espece : ' + data
+                                        .montant_offert) + ' , Espece : ' + data
                                     .montant_espece + ' Carte : ' + data.montant_carte +
                                     ' Offert : ' + data.montant_offert +
                                     ' Sur Compte : ' + data.montant_compte,
@@ -2064,12 +2100,11 @@
                         console.log(data);
                         location.reload();
                     },
-                    error: function(values) {
-                    }
+                    error: function(values) {}
                 });
             });
             $("#code_bar").on('keyup', function(e) {
-                var valu = $(this); 
+                var valu = $(this);
                 if (e.keyCode === 13) {
                     $.ajax({
                         type: "get",
@@ -2080,7 +2115,7 @@
 
                         },
                         success: function(data) {
-                            console.log(data.data)  ;
+
                             valu.val('');
                             if (data.msg == "success") {
                                 remise_max = data.remise_max
@@ -2143,6 +2178,7 @@
                     settickt(mainticket, null, '#hidden_body_ticket', '#hidden_total_ticket');
                 }
             });
+
             function changeReste() {
                 var prix_payer = $("#prix_payer").val() > 0 ? $("#prix_payer").val() : $('#hidden_prix_payer_model')
                     .val();
@@ -2152,16 +2188,17 @@
                     $('#reste_ticket').show();
                     $('#reste_ticket').html(
                         `<h2>Reste : <p> ${(prix_payer - (totalTic - totalTic*remise/100)).toFixed(2) } DH</p></h2>`
-                        );
+                    );
                     $('#hidden_ticket_rest').show();
                     $('#hidden_ticket_rest').html(
                         `<h2>Reste : <p> ${(prix_payer - (totalTic - totalTic*remise/100)).toFixed(2) } DH</p></h2>`
-                        );
+                    );
                 } else {
                     $('#hidden_ticket_rest').hide();
                     $('#reste_ticket').hide();
                 }
             }
+
             function changeRemise() {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : $('#hidden_remise_model').val();
                 //var totalTic = $('#total_a_payer').val();
@@ -2169,11 +2206,11 @@
                     $('#Remise_ticket').show();
                     $('#Remise_ticket').html(
                         `<h2>Remise : <p>${$('#remise').val()}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
-                        );
+                    );
                     $('#hidden_Remise_ticket').show();
                     $('#hidden_Remise_ticket').html(
                         `<h2>Remise : <p>${$('#remise').val()}%</p> <br> Montant : <p> ${(totalTicketDH ).toFixed(2) } DH</p></h2>`
-                        );
+                    );
                 } else {
                     $('#hidden_Remise_ticket').hide();
                     $('#Remise_ticket').hide();
@@ -2211,8 +2248,8 @@
             }
         }
         /* Close fullscreen */
-        function closeFullscreen() {
-        }
+        function closeFullscreen() {}
+
         function PrintElem(elem) {
             setTimeout(function() {
                 var mywindow = window.open('', 'PRINT', 'height=400,width=600');
@@ -2247,6 +2284,7 @@
                 return true;
             }, 50)
         }
+
         function PrintDiv(elem) {
             var mywindow = window.open('', 'PRINT', 'height=400,width=600');
             mywindow.document.write('<html><head>');

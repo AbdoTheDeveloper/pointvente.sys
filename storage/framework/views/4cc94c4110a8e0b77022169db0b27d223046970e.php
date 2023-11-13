@@ -880,6 +880,7 @@
                                     remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
                                         100).toFixed(2);
                                     prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                                    
                                 }
                                 if (localStorage.getItem("isRetour")) {
                                     console.log("is retour")
@@ -1145,10 +1146,10 @@
                     } else {
                         totalTicketDH = 0;
                         $.each(arraytick, function(index, val) {
-                            poids = arraytick[index].code_bar.slice(5,)  ; 
-                            if ( arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith("21"))  {
+                            poids = arraytick[index].code_bar.slice(7,)  ; 
+                            if ( arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith("21") && arraytick[index].code_bar.length  > 7  )  {
                                 totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index].prix * (( poids * arraytick[index].qte) / 1000)) );
-                            }else if(arraytick[index].unite == "g" && arraytick[index].code_bar.startsWith("21")){
+                            }else if(arraytick[index].unite == "g" && arraytick[index].code_bar.startsWith("21") && arraytick[index].code_bar.length  > 7 ){
                                 totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index].prix * poids));
                             }else {
                                 totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
@@ -1156,20 +1157,25 @@
                         });
 
                         $.each(arraytick, function(key, value) { 
-                            poids = value.code_bar.slice(5,)  ; 
-                            console.log(poids)  ; 
-                            if ( value.unite == "kg" && value.code_bar.startsWith("21"))  {
-                                value.qte  = ( poids * value.qte) / 1000
 
-
-                            }else if(value.unite == "g" && value.code_bar.startsWith("21")){
-                                value.qte  = (poids * value.qte)
-                            }   
-                            
+                            console.log(value.code_bar.length) ; 
+                            if ( value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar.length > 7)  {
+                                poids = 0;
+                                poids = value.code_bar.slice(7,)  ;
+                                
+                                quantité  = (value.qte * poids ) / 1000
+                            }else if(value.unite == "g" && value.code_bar.startsWith("21") && value.code_bar.length > 7){
+                                poids = 0;  
+                                poids = value.code_bar.slice(7,)  ;
+                                quantité  = value.qte * poids  ; 
+                            }else{
+                                quantité  = value.qte 
+                            }
+                            // console.log(poids) ; 
                             $(body_ticket).append(`
 										<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
 											<div class='wp'> ${value.name}</div>
-											<div class='wp'> x ${value.qte.toFixed(2)} </div>
+											<div class='wp'> x ${quantité.toFixed(2)} </div>
 											<div class='wp'>${value.prix.toFixed(2)}  </div>
 											<div class='wp'>${0}</div>
 										</div>`);
@@ -2076,7 +2082,7 @@
 
                         },
                         success: function(data) {
-                            console.log(data.data)  ;
+
                             valu.val('');
                             if (data.msg == "success") {
                                 remise_max = data.remise_max

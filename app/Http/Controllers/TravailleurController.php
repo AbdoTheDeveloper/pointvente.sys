@@ -203,6 +203,8 @@ class TravailleurController extends Controller
             $prod =  Prod::where(DB::raw('LOWER(code_bar)'), substr( strtolower($data->code_bar),0,7))
             ->orWhere(DB::raw('LOWER(code_bar)'), strtolower($data->code_bar))
             ->first();
+            
+
         }
         
         //}
@@ -227,6 +229,8 @@ class TravailleurController extends Controller
         //          "unite" => "g",
         //    );
         // } else {
+
+
         $ticket = array(
             "id" => $prod->id,
             "prix" => $prod->prix_vente,
@@ -236,8 +240,11 @@ class TravailleurController extends Controller
             "uniteog" => $prod->unite,
             "unite" => $prod->unite,
             "remise_max" => $prod->remise_max,
-            "code_bar" => $prod->code_bar
+            "code_bar" => $data->code_bar
         );
+
+
+
         //}
 
         $jsonmsg = array(
