@@ -178,6 +178,11 @@
 
 
 
+                                <div class="form-group row mb-0">
+                                    <div class="col-sm-9 offset-sm-3">
+                                        <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+                                    </div>
+                                </div>
 
                             </form>
                         </div>

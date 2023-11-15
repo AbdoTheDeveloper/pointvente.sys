@@ -174,7 +174,6 @@ Route::prefix('admin/')->middleware(['Checkdate'])->group(function () {
   Route::get('create_prodStock', 'UserController@create_prodStock')->name('admin.create_prodStock');
   Route::post('store_prodStock', 'ProdStockController@store')->name('admin.store_prodStock');
   Route::get('get_articles_stock', 'ProdStockController@get_articles_stock')->name('admin.get_articles_stock');
-  Route::post('get_prod_by_code', 'ProdStockController@get_prod_by_code')->name('admin.get_prod_by_code');
   Route::get('delete_stock_ope/{id}', 'StockOperationController@destroy')->name('admin.delete_stock_ope');
 
   Route::get('StockOperationGet', 'StockOperationController@StockOperationGet')->name('admin.StockOperationGet');

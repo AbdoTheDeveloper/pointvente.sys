@@ -1,0 +1,631 @@
+-- ----------------------
+-- dump de la base caisse au 2023-09-20
+-- ----------------------
+
+
+-- -----------------------------
+-- Structure de la table backups
+-- -----------------------------
+CREATE TABLE `backups` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `fichier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table categories
+-- -----------------------------
+CREATE TABLE `categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `nom_cat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img` text COLLATE utf8mb4_unicode_ci,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table classes
+-- -----------------------------
+CREATE TABLE `classes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nbre_elev` text COLLATE utf8mb4_unicode_ci,
+  `id_niv` int(11) DEFAULT NULL,
+  `id_etab` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table cloturages
+-- -----------------------------
+CREATE TABLE `cloturages` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_trav` int(11) NOT NULL,
+  `montant` double(22,0) DEFAULT NULL,
+  `nombreOperation` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `montant_espece` float NOT NULL,
+  `montant_carte` float NOT NULL,
+  `montant_compte` float NOT NULL,
+  `montant_offert` float NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table configs
+-- -----------------------------
+CREATE TABLE `configs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url_parent` varchar(50) NOT NULL,
+  `guid_depot` varchar(50) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+-- -----------------------------
+-- Structure de la table detail_operations
+-- -----------------------------
+CREATE TABLE `detail_operations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_trav` int(11) DEFAULT NULL,
+  `id_operation` int(11) DEFAULT NULL,
+  `id_prod` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prix` double DEFAULT NULL,
+  `remise_appliquee` int(11) DEFAULT '0',
+  `montant_remis` float DEFAULT '0',
+  `qte_prod` double DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table detail_solds
+-- -----------------------------
+CREATE TABLE `detail_solds` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_eleve` int(11) DEFAULT NULL,
+  `type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `remrque` mediumtext COLLATE utf8mb4_unicode_ci,
+  `sold` double(22,0) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table eleves
+-- -----------------------------
+CREATE TABLE `eleves` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_etab` int(11) DEFAULT NULL,
+  `id_class` int(11) NOT NULL,
+  `sold_r` double(22,0) DEFAULT '0',
+  `sold_b` double(22,0) DEFAULT '0',
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `age` date DEFAULT NULL,
+  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adress` text COLLATE utf8mb4_unicode_ci,
+  `tele` text COLLATE utf8mb4_unicode_ci,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delegue` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table failedjobs
+-- -----------------------------
+CREATE TABLE `failedjobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_produit` varchar(50) NOT NULL,
+  `qte` int(11) NOT NULL,
+  `date_failed` date NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------
+-- Structure de la table fornisseurs
+-- -----------------------------
+CREATE TABLE `fornisseurs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `nom_frns` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adress` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarque` text COLLATE utf8mb4_unicode_ci,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table migrations
+-- -----------------------------
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table niveaux
+-- -----------------------------
+CREATE TABLE `niveaux` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_etab` int(11) NOT NULL,
+  `Desc_niveau` text COLLATE utf8mb4_unicode_ci,
+  `classement` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table operations
+-- -----------------------------
+CREATE TABLE `operations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_trav` int(11) NOT NULL,
+  `id_eleve` int(11) NOT NULL,
+  `date_operation` date DEFAULT NULL,
+  `numtick` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cloturage` int(11) DEFAULT NULL,
+  `statut` int(11) DEFAULT '1',
+  `total_a_payer` double DEFAULT NULL,
+  `prix_payer` double DEFAULT NULL,
+  `remise` double DEFAULT '0',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_table` int(11) DEFAULT NULL,
+  `id_client` int(11) DEFAULT NULL,
+  `methode_paie` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table parametrages
+-- -----------------------------
+CREATE TABLE `parametrages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `enable_cusisine` int(11) NOT NULL,
+  `enable_barman` int(11) NOT NULL,
+  `cloturage_v1` int(11) NOT NULL DEFAULT '1',
+  `cloturage_v2` int(11) NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+-- -----------------------------
+-- Structure de la table password_resets
+-- -----------------------------
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table prod_stocks
+-- -----------------------------
+CREATE TABLE `prod_stocks` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `id_operationStock` int(11) DEFAULT NULL,
+  `id_prod` int(11) DEFAULT NULL,
+  `qteEntrer` double(22,0) DEFAULT NULL,
+  `prixEntre` double(22,0) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table prods
+-- -----------------------------
+CREATE TABLE `prods` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `id_cat` int(11) DEFAULT NULL,
+  `prix_achat` float DEFAULT NULL,
+  `prix_vente` float DEFAULT NULL,
+  `remise_max` float NOT NULL,
+  `lebelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code_bar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unite` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `img` text COLLATE utf8mb4_unicode_ci,
+  `type` int(11) DEFAULT NULL,
+  `qte` int(11) DEFAULT '0',
+  `qte_alert` int(11) DEFAULT '10',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table remarques
+-- -----------------------------
+CREATE TABLE `remarques` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `remarque` text,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------
+-- Structure de la table serial_code
+-- -----------------------------
+CREATE TABLE `serial_code` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table societe
+-- -----------------------------
+CREATE TABLE `societe` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `valeur_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table stock_operations
+-- -----------------------------
+CREATE TABLE `stock_operations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `id_frns` int(11) NOT NULL,
+  `remarque` text COLLATE utf8mb4_unicode_ci,
+  `date_opt` date DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table tables
+-- -----------------------------
+CREATE TABLE `tables` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------
+-- Structure de la table travailleurs
+-- -----------------------------
+CREATE TABLE `travailleurs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `canprint` int(11) NOT NULL,
+  `is_manager` int(11) DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` mediumtext COLLATE utf8mb4_unicode_ci,
+  `modeCaisse` text COLLATE utf8mb4_unicode_ci,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------
+-- Structure de la table users
+-- -----------------------------
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` mediumtext COLLATE utf8mb4_unicode_ci,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` mediumtext COLLATE utf8mb4_unicode_ci,
+  `tele` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `grad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `msg` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `p_frns` int(11) NOT NULL DEFAULT '0',
+  `p_eleve` int(11) NOT NULL DEFAULT '0',
+  `p_trav` int(11) NOT NULL DEFAULT '0',
+  `p_stock` int(11) NOT NULL DEFAULT '0',
+  `p_art` int(11) NOT NULL DEFAULT '0',
+  `p_cat` int(11) NOT NULL DEFAULT '0',
+  `p_class` int(11) NOT NULL DEFAULT '0',
+  `p_niv` int(11) NOT NULL DEFAULT '0',
+  `p_recette` int(11) NOT NULL DEFAULT '0',
+  `p_para` int(11) NOT NULL DEFAULT '0',
+  `p_save` int(11) NOT NULL DEFAULT '0',
+  `p_users` int(11) NOT NULL DEFAULT '0',
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+-- -----------------------------
+-- Contenu de la table backups
+-- -----------------------------
+
+-- -----------------------------
+-- Contenu de la table categories
+-- -----------------------------
+INSERT INTO categories VALUES('1', '1', '?1? FRUIS SECS', 'R', '', '', '2023-09-17 14:40:13', '2023-09-20 13:10:22');
+INSERT INTO categories VALUES('2', '1', '?2? FRUITS SECS SALÉE', 'R', '', '', '2023-09-17 18:11:35', '2023-09-19 16:27:12');
+INSERT INTO categories VALUES('3', '1', '?3?FRUITS SECS SUCRÉE', 'R', '', '', '2023-09-17 18:16:17', '2023-09-19 16:29:08');
+INSERT INTO categories VALUES('4', '1', '?4?FRUITS SÉCHÉS, CONFITS', 'R', '', '', '2023-09-17 18:16:37', '2023-09-19 16:29:40');
+INSERT INTO categories VALUES('5', '1', '?5?FRUITS SÉCHÉS ( SANS SUCRE )', 'R', '', '', '2023-09-17 18:19:59', '2023-09-19 16:30:01');
+INSERT INTO categories VALUES('6', '1', '?7? CHOCOLATS ET CACAO', 'R', '', '', '2023-09-17 18:21:45', '2023-09-19 16:30:30');
+INSERT INTO categories VALUES('7', '1', '?6? SPECIAL MIX FRUITS DAR TKAOUT', 'R', '', '', '2023-09-17 19:02:41', '2023-09-19 16:30:17');
+INSERT INTO categories VALUES('8', '1', '?M&C?MIEL ET CONFITURE', 'R', '', '', '2023-09-17 19:17:21', '2023-09-19 16:59:05');
+INSERT INTO categories VALUES('9', '1', '?8?GRAINS ET CÉRÉALES', 'R', '', '', '2023-09-17 19:46:35', '2023-09-19 16:32:36');
+INSERT INTO categories VALUES('10', '1', '?9?LES ÉPICES', 'R', '', '', '2023-09-17 21:51:13', '2023-09-19 16:33:02');
+INSERT INTO categories VALUES('11', '1', '?É?MÉLANGE DES ÉPICES', 'R', '', '', '2023-09-17 22:35:21', '2023-09-19 16:40:00');
+INSERT INTO categories VALUES('12', '1', '?H-MÉDI?HERBES MÉDICINALE', 'R', '', '', '2023-09-17 23:22:19', '2023-09-19 16:57:52');
+INSERT INTO categories VALUES('15', '1', '?A?AMLOU DAR TKAOUT', 'R', '', '', '2023-09-17 23:36:41', '2023-09-19 16:40:42');
+INSERT INTO categories VALUES('17', '1', '?C?COSMÉTIQUE /  BEAUTÉ', 'R', '', '', '2023-09-17 23:44:06', '2023-09-19 16:37:01');
+INSERT INTO categories VALUES('18', '1', '?DT-THÉ?THÉ DAR_TKAOUT', 'R', '', '', '2023-09-18 12:08:04', '2023-09-19 17:01:15');
+INSERT INTO categories VALUES('19', '1', '?H-AROM?HERBES AROMATIQUE', 'R', '', '', '2023-09-19 15:39:48', '2023-09-19 16:57:16');
+INSERT INTO categories VALUES('20', '1', '?DT-CAFE?CAFÉ DAR_TKAOUT', 'R', '', '', '2023-09-19 16:43:02', '2023-09-19 17:00:35');
+INSERT INTO categories VALUES('21', '1', '?H-VÉGÉ?HUILES VÉGÉTALES', 'R', '', '', '2023-09-19 16:45:55', '2023-09-19 16:48:38');
+INSERT INTO categories VALUES('22', '1', '?H-ESSE?HUILES ESSENTIELLES', 'R', '', '', '2023-09-19 16:55:48', '2023-09-19 16:55:48');
+
+-- -----------------------------
+-- Contenu de la table classes
+-- -----------------------------
+INSERT INTO classes VALUES('1', 'A', '20', '1', '', '', '2020-09-26 10:57:46', '2020-09-26 10:57:46');
+INSERT INTO classes VALUES('2', 'staff', '200', '1', '', '', '2020-09-26 11:21:21', '2020-09-26 11:21:21');
+
+-- -----------------------------
+-- Contenu de la table cloturages
+-- -----------------------------
+INSERT INTO cloturages VALUES('1', '1', '2485', '13', '2023-09-20 13:17:14', '2023-09-20 13:17:14', '2485', '0', '0', '0');
+INSERT INTO cloturages VALUES('2', '1', '0', '0', '2023-09-20 13:17:21', '2023-09-20 13:17:21', '0', '0', '0', '0');
+INSERT INTO cloturages VALUES('3', '1', '1860', '6', '2023-09-20 16:17:26', '2023-09-20 16:17:26', '1860', '0', '0', '0');
+
+-- -----------------------------
+-- Contenu de la table configs
+-- -----------------------------
+INSERT INTO configs VALUES('5', 'http://localhost/plastpv', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-03 10:34:10', '2023-05-03 10:34:10');
+INSERT INTO configs VALUES('6', 'https://pointprotection.store', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-08 09:39:17', '2023-05-08 09:39:17');
+INSERT INTO configs VALUES('7', 'http://pointprotection.store', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-08 09:45:25', '2023-05-08 09:45:25');
+INSERT INTO configs VALUES('8', 'http://gcmi.store/', 'null', '2023-05-09 09:34:52', '2023-05-09 09:34:52');
+INSERT INTO configs VALUES('9', 'http://gcmi.store/', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-10 10:09:21', '2023-05-10 10:09:21');
+INSERT INTO configs VALUES('10', 'http://gcmi.store/', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-20 12:28:48', '2023-05-20 12:28:48');
+INSERT INTO configs VALUES('11', 'http://gcmi.store/', '53c475f0-117c-4865-b1ff-742b95b6e8f1', '2023-05-20 13:35:28', '2023-05-20 13:35:28');
+INSERT INTO configs VALUES('12', 'http://gcmi.store/', '2cb6dfe6-2fec-480f-ac11-05bcf7c92d57sdf', '2023-09-16 14:38:34', '2023-05-20 14:45:12');
+INSERT INTO configs VALUES('13', 'https://gcmi.store/', '2cb6dfe6-2fec-480f-ac11-05bcf7c92d57sdfs', '2023-09-16 14:38:31', '2023-05-20 15:18:14');
+INSERT INTO configs VALUES('14', 'https://gcmi.store/', '7af8c40f-c7be-41db-87af-5d6f018de0efsdfsd', '2023-09-16 14:38:29', '2023-06-16 14:36:01');
+INSERT INTO configs VALUES('15', 'https://gcmi.store/', '9f9d274e-cb54-4200-89f3-13adfc845edasdfsd', '2023-09-16 14:38:28', '2023-06-17 11:13:34');
+INSERT INTO configs VALUES('16', 'https://gcmi.store/', 'sdfsdf', '2023-09-16 14:38:27', '2023-06-17 11:14:32');
+INSERT INTO configs VALUES('17', 'https://gcmi.store/', 'sdfs', '2023-09-16 14:38:25', '2023-06-17 11:15:40');
+INSERT INTO configs VALUES('18', 'https://gcmi.store/', 'c907d65d-791a-4c30-af85-sdfsdf', '2023-09-16 14:38:23', '2023-07-04 12:53:08');
+INSERT INTO configs VALUES('19', 'https://gcmi.store/', 'sdfs', '2023-09-16 14:38:20', '2023-07-17 10:06:21');
+INSERT INTO configs VALUES('21', 'https://gcmi.store/', 'sdfsdf', '2023-09-16 14:38:17', '2023-09-10 15:55:43');
+INSERT INTO configs VALUES('22', 'https://gcmi.store/', '9f9d274e-cb54-4200-89ffsdfs3-13adfc845edas', '2023-09-16 14:38:15', '2023-09-10 15:58:22');
+
+-- -----------------------------
+-- Contenu de la table detail_operations
+-- -----------------------------
+INSERT INTO detail_operations VALUES('1', '1', '1', '2', '135', '', '0', '1', '', '2023-09-19 20:21:00', '2023-09-19 20:21:00');
+INSERT INTO detail_operations VALUES('2', '1', '2', '2', '135', '', '0', '1', '', '2023-09-19 20:22:11', '2023-09-19 20:22:11');
+INSERT INTO detail_operations VALUES('3', '1', '3', '2', '135', '', '0', '1', '', '2023-09-19 20:22:26', '2023-09-19 20:22:26');
+INSERT INTO detail_operations VALUES('4', '1', '4', '2', '135', '', '0', '1', '', '2023-09-19 20:38:42', '2023-09-19 20:38:42');
+INSERT INTO detail_operations VALUES('5', '1', '5', '2', '135', '0', '0', '1', '2023-09-20 13:00:47', '2023-09-19 20:38:52', '2023-09-20 13:00:47');
+INSERT INTO detail_operations VALUES('6', '1', '6', '2', '135', '0', '0', '1', '', '2023-09-19 20:38:56', '2023-09-19 20:38:56');
+INSERT INTO detail_operations VALUES('7', '1', '7', '2', '135', '0', '0', '1', '', '2023-09-19 20:39:34', '2023-09-19 20:39:34');
+INSERT INTO detail_operations VALUES('8', '1', '8', '2', '135', '0', '0', '1', '', '2023-09-19 20:41:46', '2023-09-19 20:41:46');
+INSERT INTO detail_operations VALUES('9', '1', '9', '2', '135', '0', '0', '1', '', '2023-09-19 21:07:12', '2023-09-19 21:07:12');
+INSERT INTO detail_operations VALUES('10', '1', '10', '2', '135', '', '0', '1', '', '2023-09-20 12:23:50', '2023-09-20 12:23:50');
+INSERT INTO detail_operations VALUES('11', '1', '11', '2', '135', '0', '0', '1', '2023-09-20 13:00:44', '2023-09-20 12:25:00', '2023-09-20 13:00:44');
+INSERT INTO detail_operations VALUES('12', '1', '12', '1', '170', '0', '0', '1', '', '2023-09-20 12:25:11', '2023-09-20 12:25:11');
+INSERT INTO detail_operations VALUES('13', '1', '13', '2', '135', '', '0', '1', '', '2023-09-20 13:00:02', '2023-09-20 13:00:02');
+INSERT INTO detail_operations VALUES('14', '1', '14', '2', '270', '', '0', '2', '', '2023-09-20 13:00:50', '2023-09-20 13:00:50');
+INSERT INTO detail_operations VALUES('15', '1', '15', '2', '270', '0', '0', '2', '', '2023-09-20 13:01:03', '2023-09-20 13:01:03');
+INSERT INTO detail_operations VALUES('16', '1', '16', '3', '50', '', '0', '1', '', '2023-09-20 13:15:06', '2023-09-20 13:15:06');
+INSERT INTO detail_operations VALUES('17', '1', '17', '1', '170', '', '0', '1', '', '2023-09-20 13:19:19', '2023-09-20 13:19:19');
+INSERT INTO detail_operations VALUES('18', '1', '18', '1', '170', '', '0', '1', '', '2023-09-20 13:19:23', '2023-09-20 13:19:23');
+INSERT INTO detail_operations VALUES('19', '1', '19', '1', '170', '', '0', '1', '', '2023-09-20 13:25:30', '2023-09-20 13:25:30');
+INSERT INTO detail_operations VALUES('20', '1', '20', '1', '170', '', '0', '1', '', '2023-09-20 13:26:02', '2023-09-20 13:26:02');
+INSERT INTO detail_operations VALUES('21', '1', '21', '1', '170', '', '0', '1', '', '2023-09-20 15:14:19', '2023-09-20 15:14:19');
+INSERT INTO detail_operations VALUES('22', '1', '22', '1', '170', '', '0', '1', '', '2023-09-20 15:24:02', '2023-09-20 15:24:02');
+
+-- -----------------------------
+-- Contenu de la table detail_solds
+-- -----------------------------
+INSERT INTO detail_solds VALUES('1', '1', '2', 'B', '', '99999999999', '', '2021-03-23 17:32:35', '2021-03-23 17:32:35');
+INSERT INTO detail_solds VALUES('2', '1', '2', 'R', '', '99999999999999', '', '2021-03-23 17:32:49', '2021-03-23 17:32:49');
+INSERT INTO detail_solds VALUES('3', '1', '1', 'R', '', '8888888888888', '', '2021-03-23 17:33:32', '2021-03-23 17:33:32');
+INSERT INTO detail_solds VALUES('4', '1', '1', 'B', '', '88888888888888900', '', '2021-03-23 17:33:38', '2021-03-23 17:33:38');
+
+-- -----------------------------
+-- Contenu de la table eleves
+-- -----------------------------
+INSERT INTO eleves VALUES('1', '1', '1', '8888888851649', '88888888888899000', 'client', '2011-10-19', 'client', '', '', '', 'client', '$2y$10$9gle3tyFhOfh/T.0T2fF6eAxBEfa/DTAZW195mFaYdXVOSf9aHf1O', 'defalut.png', '', '', '', '2020-09-12 16:41:20', '2021-04-10 16:26:10');
+INSERT INTO eleves VALUES('2', '1', '1', '99999999999999', '99999999999', 'AADIL', '2009-05-29', 'Yasmine', '', '', '', 'AADIL3', '$2y$10$qEcSvVWlA4q3SFO9fcdOreuHRiwlurdtmbO7No5RgZqLRuNgN.ANK', 'defalut.png', '', '', '', '2020-09-12 16:41:20', '2021-03-23 17:32:49');
+INSERT INTO eleves VALUES('3', '1', '1', '0', '0', 'test', '', 'PARTICULIER', '', '0666529830', 'admin@gmail.com', '10', '$2y$10$Qg5oSbb4KySqySL/EqQSsu.hHwNg6Lcubh68UFFupePhaIRNFYNg6', 'defalut.png', '', '', '', '2023-09-08 12:18:04', '2023-09-08 12:18:04');
+
+-- -----------------------------
+-- Contenu de la table failedjobs
+-- -----------------------------
+
+-- -----------------------------
+-- Contenu de la table fornisseurs
+-- -----------------------------
+INSERT INTO fornisseurs VALUES('1', '1', 'ESSAOUIRI', '0522837633', 'admin@gmail.com', 'DERB MILLAN', '', '', '2023-09-19 19:02:12', '2023-09-19 19:02:12');
+INSERT INTO fornisseurs VALUES('2', '1', '????? ??? ??????? ??? ??????', '0632751617', 'admin@gmail.com', '', '', '', '2023-09-19 19:09:15', '2023-09-19 19:09:15');
+INSERT INTO fornisseurs VALUES('3', '1', 'Coopérative IGBAR', '0633419578', 'admin@gmail.com', '', '', '', '2023-09-19 19:10:03', '2023-09-19 19:10:03');
+INSERT INTO fornisseurs VALUES('4', '1', '??????? ?????', '212670686968', 'admin@gmail.com', '', '', '', '2023-09-19 19:11:40', '2023-09-19 19:11:40');
+INSERT INTO fornisseurs VALUES('5', '1', 'ABDERAHMAN', '0634660922', 'admin@gmail.com', 'DERB MILLA', '', '', '2023-09-19 19:15:05', '2023-09-19 19:15:05');
+INSERT INTO fornisseurs VALUES('6', '1', 'Coop Iponce', '0661445459', 'admin@gmail.com', '', '', '', '2023-09-19 19:29:17', '2023-09-19 19:29:17');
+
+-- -----------------------------
+-- Contenu de la table migrations
+-- -----------------------------
+INSERT INTO migrations VALUES('1', '2014_10_12_000000_create_users_table', '1');
+INSERT INTO migrations VALUES('2', '2014_10_12_100000_create_password_resets_table', '1');
+INSERT INTO migrations VALUES('3', '2019_03_05_150631_create_niveaux_table', '1');
+INSERT INTO migrations VALUES('4', '2019_03_05_150636_create_classes_table', '1');
+INSERT INTO migrations VALUES('5', '2019_03_05_150650_create_eleves_table', '1');
+INSERT INTO migrations VALUES('6', '2019_03_25_150856_create_backup_table', '1');
+INSERT INTO migrations VALUES('7', '2019_07_10_155834_serial_code', '1');
+INSERT INTO migrations VALUES('8', '2019_07_10_160142_societe', '1');
+INSERT INTO migrations VALUES('9', '2019_10_01_104109_create_travailleurs_table', '1');
+INSERT INTO migrations VALUES('10', '2019_10_12_110158_create_operations_table', '1');
+INSERT INTO migrations VALUES('11', '2019_10_14_100429_create_detail_operations_table', '1');
+INSERT INTO migrations VALUES('12', '2019_10_29_170848_create_prods_table', '1');
+INSERT INTO migrations VALUES('13', '2020_01_16_085903_create_categories_table', '1');
+INSERT INTO migrations VALUES('14', '2020_01_16_103036_create_prod_stocks_table', '1');
+INSERT INTO migrations VALUES('15', '2020_01_24_150100_create_fornisseurs_table', '1');
+INSERT INTO migrations VALUES('16', '2020_01_31_141217_create_stock_operations_table', '1');
+INSERT INTO migrations VALUES('17', '2019_10_14_100429_create_detail_sold_table', '2');
+
+-- -----------------------------
+-- Contenu de la table niveaux
+-- -----------------------------
+INSERT INTO niveaux VALUES('1', '1', 'A', '', '', '2020-09-26 10:48:10', '2020-09-26 10:48:10');
+
+-- -----------------------------
+-- Contenu de la table operations
+-- -----------------------------
+INSERT INTO operations VALUES('1', '1', '1', '2023-09-19', 'Yq6YuB', '1', '1', '135', '0', '0', '', '2023-09-19 20:21:00', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('2', '1', '1', '2023-09-19', 'k1hKam', '1', '1', '135', '0', '0', '', '2023-09-19 20:22:11', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('3', '1', '1', '2023-09-19', 'zk2fZ6', '1', '1', '135', '0', '0', '', '2023-09-19 20:22:26', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('4', '1', '1', '2023-09-19', 'y9hcQY', '1', '1', '135', '0', '0', '', '2023-09-19 20:38:42', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('6', '1', '1', '2023-09-19', 'cJSpBZ', '1', '1', '135', '0', '0', '', '2023-09-19 20:38:56', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('7', '1', '1', '2023-09-19', 'sSzvpW', '1', '1', '135', '0', '0', '', '2023-09-19 20:39:34', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('8', '1', '1', '2023-09-19', 'z0WKib', '1', '1', '305', '0', '0', '', '2023-09-19 20:41:46', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('9', '1', '1', '2023-09-19', 'gXWDfG', '1', '1', '135', '0', '0', '', '2023-09-19 21:07:12', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('10', '1', '1', '2023-09-20', 'ZrfeRd', '1', '1', '135', '0', '0', '', '2023-09-20 12:23:50', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('12', '1', '1', '2023-09-20', 'RgjPiD', '1', '1', '170', '0', '0', '', '2023-09-20 12:25:11', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('13', '1', '1', '2023-09-20', 'ZLIFWI', '1', '1', '305', '0', '0', '', '2023-09-20 13:00:02', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('14', '1', '1', '2023-09-20', 'n23eQz', '1', '1', '270', '0', '0', '', '2023-09-20 13:00:50', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('15', '1', '0', '2023-09-20', 'toMgCp', '', '0', '270', '0', '0', '', '2023-09-20 13:01:03', '2023-09-20 13:01:03', '', '', 'espece');
+INSERT INTO operations VALUES('16', '1', '1', '2023-09-20', 'HxrO05', '1', '1', '355', '0', '0', '', '2023-09-20 13:15:06', '2023-09-20 13:17:14', '', '', 'espece');
+INSERT INTO operations VALUES('17', '1', '1', '2023-09-20', 'GwYzGc', '3', '1', '355', '0', '0', '', '2023-09-20 13:19:19', '2023-09-20 16:17:26', '', '', 'espece');
+INSERT INTO operations VALUES('18', '1', '1', '2023-09-20', 'GnTvnc', '3', '1', '355', '0', '0', '', '2023-09-20 13:19:23', '2023-09-20 16:17:26', '', '', 'espece');
+INSERT INTO operations VALUES('19', '1', '1', '2023-09-20', 'au26kp', '3', '1', '355', '0', '0', '', '2023-09-20 13:25:30', '2023-09-20 16:17:26', '', '', 'espece');
+INSERT INTO operations VALUES('20', '1', '1', '2023-09-20', 'KtnSef', '3', '1', '355', '0', '0', '', '2023-09-20 13:26:02', '2023-09-20 16:17:26', '', '', 'espece');
+INSERT INTO operations VALUES('21', '1', '1', '2023-09-20', 'IMB6IM', '3', '1', '220', '0', '0', '', '2023-09-20 15:14:19', '2023-09-20 16:17:26', '', '', 'espece');
+INSERT INTO operations VALUES('22', '1', '1', '2023-09-20', 'llhl14', '3', '1', '220', '0', '0', '', '2023-09-20 15:24:02', '2023-09-20 16:17:26', '', '', 'espece');
+
+-- -----------------------------
+-- Contenu de la table parametrages
+-- -----------------------------
+INSERT INTO parametrages VALUES('1', '0', '0', '1', '0', '2023-06-26 11:23:48', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('2', '1', '1', '1', '0', '2023-06-26 10:34:49', '2023-06-26 10:34:49', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('3', '0', '0', '1', '0', '2023-06-26 10:40:31', '2023-06-26 10:40:31', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('4', '0', '0', '1', '0', '2023-06-26 10:40:45', '2023-06-26 10:40:45', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('5', '0', '0', '1', '0', '2023-06-26 10:40:52', '2023-06-26 10:40:52', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('6', '0', '0', '1', '0', '2023-06-26 10:42:05', '2023-06-26 10:42:05', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('7', '0', '0', '1', '0', '2023-06-26 11:51:56', '2023-06-26 10:42:10', '0000-00-00 00:00:00');
+INSERT INTO parametrages VALUES('8', '1', '0', '1', '0', '2023-06-27 09:59:44', '2023-06-27 09:59:44', '2023-06-27 10:59:44');
+INSERT INTO parametrages VALUES('9', '1', '1', '1', '0', '2023-06-27 09:59:51', '2023-06-27 09:59:51', '2023-06-27 10:59:51');
+INSERT INTO parametrages VALUES('10', '0', '0', '1', '0', '2023-06-27 09:59:57', '2023-06-27 09:59:57', '2023-06-27 10:59:57');
+INSERT INTO parametrages VALUES('11', '0', '0', '0', '1', '2023-07-16 21:17:07', '2023-07-16 21:17:07', '2023-07-16 22:17:07');
+
+-- -----------------------------
+-- Contenu de la table password_resets
+-- -----------------------------
+
+-- -----------------------------
+-- Contenu de la table prod_stocks
+-- -----------------------------
+INSERT INTO prod_stocks VALUES('1', '1', '1', '2', '100', '95', '', '2023-09-19 19:53:35', '2023-09-19 19:53:35');
+INSERT INTO prod_stocks VALUES('2', '1', '2', '1', '50', '128', '', '2023-09-19 20:41:34', '2023-09-19 20:41:34');
+INSERT INTO prod_stocks VALUES('3', '1', '3', '3', '50', '30', '', '2023-09-20 13:13:16', '2023-09-20 13:13:16');
+
+-- -----------------------------
+-- Contenu de la table prods
+-- -----------------------------
+INSERT INTO prods VALUES('1', '1', '1', '90', '170', '5', 'PISTACHE ??????', '', 'qte', '', '1', '43', '10', '', '2023-09-19 19:33:25', '2023-09-20 15:24:02');
+INSERT INTO prods VALUES('2', '1', '2', '95', '135', '5', 'ACAJOU SALEE', '', 'qte', '2023-09-19-19-56-10-almond.png', '1', '84', '10', '2023-09-20 15:12:35', '2023-09-19 19:47:46', '2023-09-20 15:12:35');
+INSERT INTO prods VALUES('3', '1', '1', '30', '50', '5', 'cacahuete ?????? ???????', '', 'qte', '', '1', '49', '10', '', '2023-09-20 13:12:19', '2023-09-20 13:15:06');
+
+-- -----------------------------
+-- Contenu de la table remarques
+-- -----------------------------
+
+-- -----------------------------
+-- Contenu de la table serial_code
+-- -----------------------------
+INSERT INTO serial_code VALUES('1', 'apJraJFglmBpag==', '', '');
+INSERT INTO serial_code VALUES('2', 'apJrZJFgmmBpcA==', '', '');
+
+-- -----------------------------
+-- Contenu de la table societe
+-- -----------------------------
+INSERT INTO societe VALUES('1', '4c927cb6a2ca24f314257b1db669fdaf', '2020-09-26 12:47:09', '');
+
+-- -----------------------------
+-- Contenu de la table stock_operations
+-- -----------------------------
+INSERT INTO stock_operations VALUES('1', '1', '1', '', '2023-09-19', '', '2023-09-19 19:53:34', '2023-09-19 19:53:34');
+INSERT INTO stock_operations VALUES('2', '1', '1', '', '2023-09-19', '', '2023-09-19 20:41:34', '2023-09-19 20:41:34');
+INSERT INTO stock_operations VALUES('3', '1', '1', '', '2023-09-20', '', '2023-09-20 13:13:16', '2023-09-20 13:13:16');
+
+-- -----------------------------
+-- Contenu de la table tables
+-- -----------------------------
+
+-- -----------------------------
+-- Contenu de la table travailleurs
+-- -----------------------------
+INSERT INTO travailleurs VALUES('1', '1', '1', '', 'miya', 'MIYA', 'R', '$2y$10$2z/4KC9CiaXe.iieIhrrZuEwTjcZslCPwcKOwRmzX0fPBk/wYzgEe', '.', 'NWP9Nlkz0HOlnVvZTUwjb5e1BlafJBUdV0rA7kU4qeXAIZF5MrAE0Zfz7Gj6', '', '2020-09-05 15:22:24', '2023-06-08 10:24:50');
+INSERT INTO travailleurs VALUES('2', '1', '1', '1', 'manager1', '', 'R', '$2y$10$R0aSyoqYKqJKerr5fqekNexOYhF/DCe12I7FAdpjxL4oxQwRzXDPC', '', 'evuy1a1kBFo9jSZ9vi33wr4xe75eCoYRgoKyWYMbNsRBGRA5BkiHhO3utrBc', '', '2023-06-05 15:56:35', '2023-06-08 10:25:09');
+INSERT INTO travailleurs VALUES('3', '1', '1', '1', 'manager2', 'manager2', 'R', '$2y$10$yRUe5Gk.PP3EFdq3gZxAMOf6UY7UyqNG13zEq70PgrzWGaD188mma', '', '', '', '2023-06-05 15:56:48', '2023-06-05 15:56:48');
+
+-- -----------------------------
+-- Contenu de la table users
+-- -----------------------------
+INSERT INTO users VALUES('1', '??????? DAR TKAOUT - ??? ??????? ???????', 'admin@gmail.com', 'admin', '$2y$10$ET/Mvm7qMZTrGu8/VLXqcu5aLUeDmZbM4U4t9mOw12ElH1r7ldp6C', '', 'DAR_TKAOUT_???_???????_(1)-transformed.png', 'admin', 'CASABLANCA DAR BOUAZZA ARRAHMA 2 BD.AL KHOUZAMA LOT 23 DIAR ANAWER GR 2 IMM 3 MAGASIN N°5 ______________________________________________  06 55 83 62 28  ou  08 08 54 48 58     www.dartkaout.com  __________________________ Merci pour votre visite', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '4sUpDlLjKaogQbZK2xXLoMkhzH8RU6xcfyxelZcuWbQcbsc72N39DW9zco9H', '', '', '2023-09-20 15:48:20');
+INSERT INTO users VALUES('2', 'BOUZID', 'bouzid.ilyasse@gmail.comoo', 'ilyasse', '$2y$10$J06RBE8KChr/q6tT7kazQuwYxerB507eod11SWxTw6mU1HCPBU6HK', '06534395437', 'ilyasseimground.jpg', 'User', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '', '2020-09-14 15:17:45', '2020-09-14 15:42:19');
+INSERT INTO users VALUES('3', 'BOUZID', 'bouzid.ilyasse@gmail.com', 'ilyasse', '$2y$10$OlgjsRpFNe9Th7Gwk0pNgO4seCiZXRnX5KvqonshiI0KHewcVc5Fu', '06534395437', 'ilyasseimground.jpg', 'User', '', '0', '0', '0', '1', '0', '1', '0', '1', '0', '1', '0', '0', '', '2020-09-14 15:20:38', '2020-09-14 15:18:03', '2020-09-14 15:20:38');
+INSERT INTO users VALUES('4', 'IBRAHIM EL MOUSSAOUI', 'ibramaroc@gmail.com', 'aadloune2020', '$2y$10$oGHyh5bYOg7HYghKWY11PecEjX52cb8YUDq9h6dIOlRGenjqt6.lK', '', 'aham116977.jpg', 'Admin', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '2020-09-14 15:42:46', '2020-09-14 15:46:25');
+

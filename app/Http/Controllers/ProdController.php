@@ -175,7 +175,6 @@ class ProdController extends Controller
             ->orWhere('prix_vente', 'like', '%' . $search . '%')
             ->orWhere('qte', 'like', '%' . $search . '%')
             ->orWhere('qte_alert', 'like', '%' . $search . '%')
-            ->orWhere('code_bar', '=',  $search)
             ->orderby($orderby[$order[0]["column"]], $order[0]["dir"])
             ->offset($start)
             ->limit($limit)->get();

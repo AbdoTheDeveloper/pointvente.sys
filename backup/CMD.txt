@@ -1,0 +1,13 @@
+php artisan make:model Etablissement -mcr
+php artisan make:model Niveau -mcr
+php artisan make:model Classe -mcr
+php artisan make:model Parcours -mcr
+php artisan make:model Professeur -mcr
+php artisan make:model Eleve -mcr
+php artisan make:model Portefeuille -mcr
+php artisan make:model Affect_cert -mcr
+php artisan make:model Item -mcr
+php artisan make:model Action -mcr
+php artisan make:model Certificat -mcr
+php artisan make:model Attachement -mcr
+php artisan make:model Item_action -mcr

@@ -42,6 +42,8 @@
                     <label for=""> Ticket Barman : </label>
                     <input <?php echo e($config->enable_barman == 1 ? 'checked' : ''); ?>  name="enable_barman" id="enable_barman" class="form-control" type="checkbox">
                 </div>
+
+
                 
                 <div class="form-group">
                     <label for=""> Cloturage V1 (Liste les ventes) : </label>
@@ -54,17 +56,6 @@
                     <input <?php echo e($config->cloturage_v2 == 1 ? 'checked' : ''); ?>  name="cloturage_v2" id="cloturage_v2" class="form-control" type="checkbox">
                 </div>
 
-
-              <div class="form-group">
-                    <label for=""> Afficher la liste des table : </label>
-                    <input <?php echo e($config->table_select == 1 ? 'checked' : ''); ?>  name="table_select" id="table_select" class="form-control" type="checkbox">
-                </div>
-
-                                
-                <div class="form-group">
-                    <label for=""> Afficher la liste des remarques : </label>
-                    <input <?php echo e($config->remarque_select == 1 ? 'checked' : ''); ?>  name="remarque_select" id="remarque_select" class="form-control" type="checkbox">
-                </div>
 
 
                 <div class="form-group" style="display: flex;">

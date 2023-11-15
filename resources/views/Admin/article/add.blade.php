@@ -42,13 +42,13 @@ $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
                                             <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                                             <li class="breadcrumb-item active">Ajouter article</li>
                                         </ol>
-                                        <h1 class="h2">Ajouter un nouveau produit</h1>
+                                        <h1 class="h2">Ajouter une nouveau produit</h1>
 
                                         <div class="card border-left-3 border-left-primary card-2by1 mt50">
                                             <div class="card-body">
                                                 <div class="media flex-wrap align-items-center">
                                                     <div class="media-left col-md-8">
-                                                        Ajouter un nouveau produit
+                                                        Ajouter une nouveau produit
                                                     </div>
                                                     <div class="media-right  col-md-4 mt-2 mt-xs-plus-0 ">
                                                         <a class="btn btn-success pull-right" href="{{ route('admin.index_article') }} "> <i class="fa fa-list"></i>&nbsp;Tous les articles</a>
