@@ -48,8 +48,8 @@ class TravailleurController extends Controller
         $parametrage = Parametrage::latest()->first();
 
         $optsCoutn = Operation::where("statut", "0")
-            ->orderby("id", "desc")
-            ->get();
+        ->orderby("id", "desc")
+        ->get();
         return view('Trav.index')->with('cats', $cats)
             ->with('optsCoutn', $optsCoutn)
             ->with('articles', $articles)
@@ -1137,7 +1137,8 @@ class TravailleurController extends Controller
     public function get_unpause_ticket()
     {
 
-        $optsCoutn = DB::select(DB::raw("select `operations`.*, `tables`.`nom` from `operations` left join `tables` on `tables`.`id` = `operations`.`id_table` where `statut` = 0 AND`operations`.`deleted_at` is null order by `created_at` desc"));
+        $optsCoutn = DB::select(DB::raw("select `operations`.*, `tables`.`nom` from `operations` left join `tables` on `tables`.`id` = `operations`.`id_table` where
+         `statut` = 0 AND`operations`.`deleted_at` is null order by `created_at` desc"));
 
         $jsonmsg = array(
             "msg" => "success",

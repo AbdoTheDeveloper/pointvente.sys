@@ -853,8 +853,6 @@
                     setTimeout(function() {
 
 
-
-
                         // $.ajax({
                         // 	url: "{{ route('trav.max_remise') }}",
                         // 	type: 'post',
@@ -954,8 +952,7 @@
                             } else {
                                 if (arraytick[i].unite == "kg") {
                                     if (data.unite == "kg") {
-                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
-                                            .qte);
+                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
                                         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
                                         prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
                                         arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
@@ -1013,7 +1010,7 @@
         								<div class='wp'> -${value.name}</div>
         								<div class='wp'> - ${value.qte.toFixed(2)}</div>
         								<div class='wp'>- ${value.prix_sans_remise.toFixed(2)}</div>
-        								<div class='wp'>${value.max_remise ?? 0 } %</div>
+        								// <div class='wp'>${value.max_remise ?? 0 } %</div>
         							</div>`);
                             });
                             console.log("Prix retour : " + totalTicketDH)
@@ -1035,7 +1032,7 @@
         								<div class='wp'> ${value.name}</div>
         								<div class='wp'> x ${value.qte.toFixed(2)}</div>
         								<div class='wp'>${value.prix.toFixed(2)}</div>
-        								<div class='wp'>${value.max_remise ?? 0 } %</div>
+        								// <div class='wp'>${value.max_remise ?? 0 } %</div>
         							</div>`);
                                 return;
                             });
@@ -1183,7 +1180,7 @@
         								<div class='wp'> -${value.name}</div>
         								<div class='wp'> - ${value.qte.toFixed(2)} </div>
         								<div class='wp'>- ${value.prix.toFixed(2)} </div>
-        								<div class='wp'>${0}</div>
+        								// <div class='wp'>${0}</div>
         							</div>`);
                         });
                         $('#total_a_payer').val(totalTicketDH);
@@ -1218,12 +1215,12 @@
                                 if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar
                                     .length > 7) {
                                     poids = 0;
-                                    poids = value.code_bar.slice(7, );
+                                    poids = value.code_bar.slice(7, 12);
                                     quantité = (value.qte * poids) / 1000;
                                 } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
                                     .code_bar.length > 7) {
                                     poids = 0;
-                                    poids = value.code_bar.slice(7, );
+                                    poids = value.code_bar.slice(7,12 );
                                     quantité = value.qte * poids;
                                 } else {
                                     quantité = value.qte;
@@ -1238,7 +1235,7 @@
         								<div class='wp'> ${value.name}</div>
         								<div class='wp'> x ${quantité.toFixed(2)} </div>
         								<div class='wp'>${value.prix.toFixed(2)}  </div>
-        								<div class='wp'>${0}</div>
+        								// <div class='wp'>${0}</div>
         							</div>`);
                         });
                         $('#total_a_payer').val(totalTicketDH);
@@ -1592,9 +1589,8 @@
                             $('#hidden_ticket_date2').text(values.data.tickt.date_operation);
                             $('#hidden_ticket_table2').text(values.new_data.table ? values
                                 .new_data.table.nom : "  ");
-                            $('#hidden_ticket_client2').text(values.new_data.client ? values
-                                .new_data.client.nom : "  ");
-                            $('.info_ticket_detail_cuisine2').text(values.new_data.remarque ?
+                            $('#hidden_ticket_client2').text(values.new_data.client ? values.new_data.client.nom : "  ");
+                            $('.info_t      icket_detail_cuisine2').text(values.new_data.remarque ?
                                 values.new_data.remarque.remarque : "  ");
                             settickt(mainticket, null, '#hidden_body_ticket2',
                                 '#hidden_total_ticket2');
@@ -1741,18 +1737,14 @@
                     },
                     success: function(values) {
                         if (values.msg == "success") {
-                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom + " " +
-                                values.data.eleve.prenom);
+                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom + " " + values.data.eleve.prenom);
                             $('#hidden_ticket_num').text(values.data.tickt.numtick);
                             $('#hidden_ticket_date').text(values.data.tickt.date_operation);
-                            $('#hidden_ticket_table').text(values.new_data.table ? values
-                                .new_data.table.nom : "  ");
-                            $('#hidden_ticket_client').text(values.new_data.client ? values
-                                .new_data.client.nom : "  ");
-                            settickt(mainticket, null, '#hidden_body_ticket',
-                                '#hidden_total_ticket');
+                            $('#hidden_ticket_table').text(values.new_data.table ? values.new_data.table.nom : "  ");
+                            $('#hidden_ticket_client').text(values.new_data.client ? values.new_data.client.nom : "  ");
+                            settickt(mainticket, null, '#hidden_body_ticket','#hidden_total_ticket');
                             $('#prix_payer').val(0);
-                            $('#remise').val(0);
+                            // $('#remise').val(0);
                             $('#reste_ticket').hide();
                             $('#Remise_ticket').hide();
                             @if (Auth::user()->canprint)
@@ -2055,7 +2047,7 @@
                     url: "{{ route('trav.cloturage') }}",
                     type: 'get',
                     success: function(data) {
-                        console.log(data)
+                        console.log(data) ;
                         if (data != "") {
                             Swal.fire({
                                 title: 'votre cloturage est',

@@ -210,7 +210,8 @@
             <br>
             <br>
 
-            <div class="operationboxdetail" style="display: flex; align-items: flex-end; justify-content: end; width: 100%;">
+            <div class="operationboxdetail" 
+                 style="display: flex; align-items: flex-end; justify-content: end; width: 100%;">
 
                 <div class="wp"> Total : &nbsp; {{$tot_cat}} DH</div>
 
