@@ -48,8 +48,8 @@ class TravailleurController extends Controller
         $parametrage = Parametrage::latest()->first();
 
         $optsCoutn = Operation::where("statut", "0")
-        ->orderby("id", "desc")
-        ->get();
+            ->orderby("id", "desc")
+            ->get();
         return view('Trav.index')->with('cats', $cats)
             ->with('optsCoutn', $optsCoutn)
             ->with('articles', $articles)
@@ -178,7 +178,6 @@ class TravailleurController extends Controller
 
     public function getprodbycode_bar(Request $data)
     {
-
         $qte = 0;
 
 
@@ -193,17 +192,22 @@ class TravailleurController extends Controller
         // $code_bar = substr($data->code_bar, 0, 7);
         //$prod_qte =   substr($data->code_bar, 7, 5);
         //  $prod =  Prod::where(DB::raw('LOWER(code_bar)'), strtolower($code_bar))->first();
-        //} else {
-        $prod =  Prod::where(DB::raw('LOWER(code_bar)'), strtolower($data->code_bar))->first();
-        function startsWith($haystack, $needle) {
+        $prod = DB::table('prods')
+            ->select('*')
+            ->where(strtolower('code_bar'), '=', $data->code_bar)
+            ->first();
+        
+        function startsWith($haystack, $needle)
+        {
             return substr($haystack, 0, strlen($needle)) === $needle;
         }
 
-        if (startsWith($data->code_bar,'21')){
-            $prod =  Prod::where(DB::raw('LOWER(code_bar)'), substr( strtolower($data->code_bar),0,7))
-            ->orWhere(DB::raw('LOWER(code_bar)'), strtolower($data->code_bar))
-            ->first();
-            
+        if (startsWith($data->code_bar, '21')) {
+            $prod = DB::table('prods')
+                ->select('*')
+                ->where(strtolower('code_bar'),"=", substr(strtolower($data->code_bar), 0, 7))
+                ->orWhere(strtolower('code_bar'), '=', $data->code_bar)
+                ->first();
 
         }
         
@@ -327,8 +331,7 @@ class TravailleurController extends Controller
 
 
 
-        foreach ($data->ticket as $key => $value) {
-
+        foreach ($data->ticket as $key => $value) { 
             $detailOperation = new DetailOperation;
             $detailOperation->id_trav = Auth::user()->id;
             $detailOperation->id_operation = $operation->id;
@@ -638,6 +641,13 @@ class TravailleurController extends Controller
 
     public function ticket(Request $data)
     {
+
+
+        function startsWith($haystack, $needle)
+        {
+            return substr($haystack, 0, strlen($needle)) === $needle;
+        }
+
         $qte = 0;
 
         $jsonmsg = null;
@@ -712,27 +722,37 @@ class TravailleurController extends Controller
 
 
 
-        foreach ($data->ticket as $key => $value) {
-
+        foreach ($data->ticket as $key => $value) {  
             $detailOperation = new DetailOperation;
             $detailOperation->id_trav = Auth::user()->id;
             $detailOperation->id_operation = $operation->id;
             $detailOperation->id_prod = $value['idProd'];
 
-            $detailOperation->prix = $value['prix'];
-            $detailOperation->qte_prod = $value['qte'];
+            $detailOperation->prix = $value['prix']; 
+
+            if( array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" && $value['unite'] == "kg") ){
+                $detailOperation->qte_prod = substr($value['code_bar'] ,7 , 5) / 1000 ;
+            } else {$detailOperation->qte_prod = $value['qte'];}
+            
 
 
 
-            $prod = Prod::where('id', $value['idProd'])->first();
+//            dd($value['idProd']) ;
+
+            $prod = DB::table("prods")->select("*")->where("id","=",$value['idProd'])->first() ; 
+     
 
             $prod_remise = $prod->remise_max > $data->remise ? $data->remise : $prod->remise_max;
 
 
             $detailOperation->remise_appliquee = $prod_remise;
             $detailOperation->montant_remis = $prod->prix_vente * $prod_remise / 100;
-
-            $qte = $value['qte'];
+            if(array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" && $value['unite'] == "kg") ){
+                $qte = substr($value['code_bar'] ,7 , 5) / 1000 ;
+             } else {
+                $qte = $value['qte'];
+                }
+            
 
 
 
@@ -748,7 +768,7 @@ class TravailleurController extends Controller
                 );
             }
             $prod->qte = ($prod->qte - $qte);
-            $prod->save();
+            DB::update("update prods set qte = qte - $qte where id = $prod->id ");
 
 
             if (PointDeVenteController::is_connected("https://www.google.com")) {

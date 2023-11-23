@@ -9,6 +9,7 @@ class Prod extends Model
 
 	use SoftDeletes;
 	protected $fillable = [
+		'id' , 
 		'id_user',
 		'id_cat',
 		'prix_achat',

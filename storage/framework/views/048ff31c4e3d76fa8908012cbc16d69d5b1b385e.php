@@ -888,24 +888,21 @@
                                 var prix_sans_remise = 0;
                                 if (data.uniteog == "kg") {
                                     if (data.unite == "kg") {
-
                                         $(body_ticket).html('');
                                         newqte = parseFloat(data.qte);
                                         newprix += parseFloat(data.prix) * parseFloat(data.qte);
 
                                     } else {
-                                        console.log("2");
                                         newqte = parseFloat(data.qte) / 1000;
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
                                     }
                                 } else if (data.uniteog == "g") {
-                                    console.log("3");
                                     if (data.unite == "kg") {
                                         newqte = parseFloat(data.qte) * 1000;
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
 
                                     } else {
-                                        console.log("4");
+
                                         newqte = parseFloat(data.qte);
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte));
                                     }
@@ -920,6 +917,8 @@
                                 }
                                 if (localStorage.getItem("isRetour")) {
                                     console.log("is retour")
+
+
                                     arraytick.push({
                                         idProd: data.id,
                                         prix: -newprix,
@@ -1009,6 +1008,7 @@
         								// <div class='wp'>${value.max_remise ?? 0 } %</div>
         							</div>`);
                             });
+                            // <div class='wp'>${value.max_remise ?? 0 } %</div>
                             console.log("Prix retour : " + totalTicketDH)
                             $('#total_a_payer').val(totalTicketDH);
                         } else {
@@ -1028,11 +1028,12 @@
         								<div class='wp'> ${value.name}</div>
         								<div class='wp'> x ${value.qte.toFixed(2)}</div>
         								<div class='wp'>${value.prix.toFixed(2)}</div>
-        								// <div class='wp'>${value.max_remise ?? 0 } %</div>
+        								<div class='wp'>${value.max_remise ?? 0 } %</div>
         							</div>`);
                                 return;
                             });
                         }
+                        
                         if ($("#paie_methode").val() == "offert") {
                             $(total_ticket).html(
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDHSansRemise.toFixed(2)} DH</p></h2>` +
@@ -1074,7 +1075,7 @@
                         $('#hidden_prix_payer_model').val(0);
                         $('#hidden_remise_model').val(0);
                         $('#reste_ticket').hide();
-                        //$('#Remise_ticket').hide();
+                        $('#Remise_ticket').hide();
                     }, 0);
                 }
                 //IF NO REMISE :
@@ -1176,45 +1177,41 @@
         								<div class='wp'> -${value.name}</div>
         								<div class='wp'> - ${value.qte.toFixed(2)} </div>
         								<div class='wp'>- ${value.prix.toFixed(2)} </div>
-        								// <div class='wp'>${0}</div>
+        								<div class='wp'>${0}</div>
         							</div>`);
                         });
                         $('#total_a_payer').val(totalTicketDH);
+                        
                     } else {
+                        // if(exist)
                         totalTicketDH = 0;
                         $.each(arraytick, function(index, val) {
                             if (arraytick[index].code_bar) {
                                 poids = arraytick[index].code_bar.slice(7, 12);
-                                if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith(
-                                        "21") && arraytick[index].code_bar.length > 7) {
+                                if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith("21") && arraytick[index].code_bar.length > 7) {
                                     totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                        .prix * ((poids * arraytick[index].qte) / 1000)));
+                                    .prix * ((poids * arraytick[index].qte) / 1000)));
                                 } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
-                                    .startsWith("21") && arraytick[index].code_bar.length > 7) {
+                                .startsWith("21") && arraytick[index].code_bar.length > 7) {
                                     totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                        .prix * poids));
+                                    .prix * poids));
                                 } else {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
-                                        .prix);
-                                    console.log(totalTicketDH); 
-                                    return;
+                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
                                 }
+
                             } else {
-                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
-                                    .prix);
+                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
 
                             }
                         });
                         $.each(arraytick, function(key, value) {
                             quantité = 0
                             if (value.code_bar) {
-                                if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar
-                                    .length > 7) {
+                                if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar.length > 7) {
                                     poids = 0;
                                     poids = value.code_bar.slice(7, 12);
                                     quantité = (value.qte * poids) / 1000;
-                                } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
-                                    .code_bar.length > 7) {
+                                } else if (value.unite == "g" && value.code_bar.startsWith("21") && value.code_bar.length > 7) {
                                     poids = 0;
                                     poids = value.code_bar.slice(7,12 );
                                     quantité = value.qte * poids;
@@ -1231,9 +1228,10 @@
         								<div class='wp'> ${value.name}</div>
         								<div class='wp'> x ${quantité.toFixed(2)} </div>
         								<div class='wp'>${value.prix.toFixed(2)}  </div>
-        								// <div class='wp'>${0}</div>
+                                        <div class='wp'>${0}</div>
         							</div>`);
                         });
+                       
                         $('#total_a_payer').val(totalTicketDH);
                     }
                     if ($("#paie_methode").val() == "offert") {
@@ -1254,7 +1252,7 @@
                     changeRemise();
                 }
             }
-            //----------------------------------------------------------------------------------------  Foncion de manipulation de ticket ------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------  Foncion de manipulation de ticket ----------------------------------------------------------------------------------------------
 
 
 
@@ -1740,7 +1738,7 @@
                             $('#hidden_ticket_client').text(values.new_data.client ? values.new_data.client.nom : "  ");
                             settickt(mainticket, null, '#hidden_body_ticket','#hidden_total_ticket');
                             $('#prix_payer').val(0);
-                            // $('#remise').val(0);
+                            $('#remise').val(0);
                             $('#reste_ticket').hide();
                             $('#Remise_ticket').hide();
                             <?php if(Auth::user()->canprint): ?>
