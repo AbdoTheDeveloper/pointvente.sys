@@ -740,15 +740,13 @@ class TravailleurController extends Controller
 //            dd($value['idProd']) ;
 
             $prod = DB::table("prods")->select("*")->where("id","=",$value['idProd'])->first() ; 
-     
-
             $prod_remise = $prod->remise_max > $data->remise ? $data->remise : $prod->remise_max;
-
-
             $detailOperation->remise_appliquee = $prod_remise;
             $detailOperation->montant_remis = $prod->prix_vente * $prod_remise / 100;
-            if(array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" && $value['unite'] == "kg") ){
+            if(array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" ) && $value['unite'] == "kg") {
                 $qte = substr($value['code_bar'] ,7 , 5) / 1000 ;
+                $result = DB::table("prods")->select('qte')->where("id","=",$prod->id)->first() ;
+                $newqte = $result->qte - $qte ;   
              } else {
                 $qte = $value['qte'];
                 }
@@ -767,9 +765,8 @@ class TravailleurController extends Controller
                     "new_data" => []
                 );
             }
-            $prod->qte = ($prod->qte - $qte);
-            DB::update("update prods set qte = qte - $qte where id = $prod->id ");
-
+            // $prod->qte = ($prod->qte - $qte); 
+            $statut = DB::update("update prods set qte = '$newqte' where id = $prod->id ");
 
             if (PointDeVenteController::is_connected("https://www.google.com")) {
 

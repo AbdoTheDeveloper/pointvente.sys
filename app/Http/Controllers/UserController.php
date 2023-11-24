@@ -60,7 +60,8 @@ class UserController  extends Controller
         
 
          
-        $classes_arr = Prod::query()->where('qte','<=','qte_alert')->get();
+        $classes_arr = Prod::where('qte','<=','qte_alert')->get();
+        // dd() ; 
 
         $classes = Travailleur::all()->count();
 
