@@ -1,16 +1,15 @@
-@extends('Trav.main')
-@section('style')
-    <link rel="stylesheet" href="{{ url('assets/css/sweetalert2.min.css') }}">
-    <link rel="stylesheet" href="{{ url('assets/css/ticket.CSS') }}">
-    <link rel="stylesheet" href="{{ url('assets/plugins/keybord/keybord.css') }}">
+<?php $__env->startSection('style'); ?>
+    <link rel="stylesheet" href="<?php echo e(url('assets/css/sweetalert2.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(url('assets/css/ticket.CSS')); ?>">
+    <link rel="stylesheet" href="<?php echo e(url('assets/plugins/keybord/keybord.css')); ?>">
     <style>
-        @media screen {
+        @media  screen {
             #printSection {
                 display: none;
             }
         }
 
-        @media print {
+        @media  print {
             body * {
                 visibility: hidden;
             }
@@ -130,16 +129,10 @@
             cursor: pointer;
         }
     </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!-- Modal Mode caisse-->
-    {{--
-<div class="btn-group btn-group-lg text-center" style="    margin: 21px auto;
-   display: inherit;" role="group" aria-label="...">
-   <a type="button"  href="{{ route('trav.index')}}" class="btn {{\Request::route()->getName() == 'trav.index'? 'btn-success' : 'btn-outline-success'}} ">Restaurant</a>
-<a type="button" href="{{ route('trav.Buvette')}}" class="btn {{\Request::route()->getName() == 'trav.Buvette'? 'btn-success' : 'btn-outline-success'}} ">Buvette</a>
-</div>
---}}
+    
     <!-- ticket -->
     <div class="row">
         <div class="col-md-3 " id="printtick">
@@ -148,10 +141,10 @@
                     <span class="material-icons">
                         replay
                     </span>
-                    @if ($optsCoutn)
+                    <?php if($optsCoutn): ?>
                         <span id="optsCoutn" class="badge badge-pill badge-secondary "
-                            data-optscoutn="{{ $optsCoutn->count() }}">{{ $optsCoutn->count() }}</span>
-                    @endif
+                            data-optscoutn="<?php echo e($optsCoutn->count()); ?>"><?php echo e($optsCoutn->count()); ?></span>
+                    <?php endif; ?>
                 </button>
                 <button id="ticktpause" type="button" class="btn btn-warning">
                     <span class="material-icons">
@@ -207,9 +200,9 @@
                     <div class=" bmd-form-group poidsInputGroup">
                         <input type="text" name="prsnl" id="prsnl" class="form-control prsnl" value="c4ca4238a0"
                             placeholder="ID Eleve" style="height: 55px">
-                        {{-- <input type="hidden" name="type" id="type" class="form-control " value="{{Auth::user()->type = \Request::route()->getName() == 'trav.index'? 'R' : 'B'}}"> --}}
+                        
                         <input type="hidden" name="type" id="type" class="form-control "
-                            value="{{ Auth::user()->type }}">
+                            value="<?php echo e(Auth::user()->type); ?>">
                         <input type="hidden" name="total_a_payer" id="total_a_payer" class="form-control">
                         <input type="hidden" name="hidden_prix_payer_model" id="hidden_prix_payer_model"
                             class="form-control">
@@ -219,7 +212,7 @@
                 <div class="col-md-1">
                     <div class=" bmd-form-group poidsInputGroup">
                         <input type="text" autofocus name="code_bar" id="code_bar" class="form-control "
-                            autocomplete="off" value="{{ old('code_bar') }}" placeholder="Code bar Produit"
+                            autocomplete="off" value="<?php echo e(old('code_bar')); ?>" placeholder="Code bar Produit"
                             style="height: 55px">
                     </div>
                 </div>
@@ -234,14 +227,14 @@
                     <div class=" bmd-form-group poidsInputGroup">
                         <input type="text" autofocus name="prix_payer" id="prix_payer"
                             class="form-control  virtual-keyboard " data-kioskboard-type="numpad"
-                            changeplaceholder="Quantité" autocomplete="off" value="{{ old('prix_payer') }}"
+                            changeplaceholder="Quantité" autocomplete="off" value="<?php echo e(old('prix_payer')); ?>"
                             placeholder="Prix Payer" style="height: 55px">
                     </div>
                 </div>
                 <div class="col-md-1 " id="remise_input">
                     <div class=" bmd-form-group poidsInputGroup">
                         <input type="text" autofocus name="remise" id="remise"
-                            class="form-control virtual-keyboard  " autocomplete="off" value="{{ old('remise') }}"
+                            class="form-control virtual-keyboard  " autocomplete="off" value="<?php echo e(old('remise')); ?>"
                             data-kioskboard-type="numpad" changeplaceholder="Remise %" placeholder="Remise %"
                             style="height: 55px">
                     </div>
@@ -265,32 +258,32 @@
                     <div class=" bmd-form-group poidsInputGroup">
                         <select class="form-control select2-single d-none" name="client_list" id="client_list">
                             <option value="">Sélectionner un client ... </option>
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->prenom }} {{ $client->nom }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $clients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($client->id); ?>"><?php echo e($client->prenom); ?> <?php echo e($client->nom); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    @if ($params->table_select == 1)
+                    <?php if($params->table_select == 1): ?>
                         <div class=" bmd-form-group poidsInputGroup">
                             <select class="form-control select2-single " name="table_list" id="table_list">
                                 <option value="">Sélectionner une table ... </option>
-                                @foreach ($tables as $table)
-                                    <option value="{{ $table->id }}"> {{ $table->nom }} </option>
-                                @endforeach
+                                <?php $__currentLoopData = $tables; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $table): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($table->id); ?>"> <?php echo e($table->nom); ?> </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-2">
-                    @if ($params->remarque_select == 1)
+                    <?php if($params->remarque_select == 1): ?>
                         <div class=" bmd-form-group poidsInputGroup">
                             <select class="form-control select2-single  " name="remarque" id="remarque">
                                 <option value="">Sélectionner une remarque ... </option>
-                                @foreach ($remarques as $remarque)
-                                    <option value="{{ $remarque->id }}"> {{ $remarque->remarque }} </option>
-                                @endforeach
+                                <?php $__currentLoopData = $remarques; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $remarque): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($remarque->id); ?>"> <?php echo e($remarque->remarque); ?> </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             <style>
                                 select option {
@@ -298,25 +291,26 @@
                                 }
                             </style>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6">
                     <div class=" bmd-form-group poidsInputGroup">
                         <input type="text" autofocus name="lebelle" id="lebelle" class="form-control "
-                            autocomplete="off" value="{{ old('lebelle') }}" placeholder="Désignation"
+                            autocomplete="off" value="<?php echo e(old('lebelle')); ?>" placeholder="Désignation"
                             style="height: 55px">
                     </div>
                 </div>
                 <button id="clear_search" class="btn btn-danger col-md-4"> Vider La Sélection </button>
                 <div class="col-md-4">
-                    @if (session('message'))
+                    <?php if(session('message')): ?>
                         <div class="alert alert-success">
-                            {{ session('message') }}
+                            <?php echo e(session('message')); ?>
+
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
             <br>
@@ -329,15 +323,16 @@
                                         class="btn btn-rounded btn-fw btn-block click_btn cat"
                                         style="background-color: white;color: black;">return</button></span>
                                 <div class="row CategoryDiv">
-                                    @foreach ($cats as $cat)
-                                        @if ($cat->type == Auth::user()->type || $cat->type == 'Mix')
+                                    <?php $__currentLoopData = $cats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($cat->type == Auth::user()->type || $cat->type == 'Mix'): ?>
                                             <button class="click_btn cat"
                                                 style=" height: 2rem; color: black;padding: 20px !important; display: flex;align-items: center;justify-content: center;margin: 0 10px 10px 0 ; cursor: pointer;"
-                                                data-id="{{ $cat->id }}" data-nom="{{ $cat->nom_cat }}">
-                                                {{ $cat->nom_cat }}
+                                                data-id="<?php echo e($cat->id); ?>" data-nom="<?php echo e($cat->nom_cat); ?>">
+                                                <?php echo e($cat->nom_cat); ?>
+
                                             </button>
-                                        @endif
-                                    @endforeach
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
                         </div>
@@ -353,15 +348,15 @@
         </div>
     </div>
     <div class="row" style="position: fixed;bottom:0;width: 100% !important;">
-        <div class="{{ $params->enable_cusisine == 1 && $params->enable_barman == 1 ? 'col-md-1' : 'col-md-2' }}">
+        <div class="<?php echo e($params->enable_cusisine == 1 && $params->enable_barman == 1 ? 'col-md-1' : 'col-md-2'); ?>">
             <button type="button" class="btn btn-success btn-rounded  btn-fw btn-block click_btn ticket"
                 style="padding: 1em;margin-bottom:10px" id="btnPrint">Ticket</button>
         </div>
-        <div class="col-md-1 {{ $params->enable_cusisine == 1 ? '' : 'd-none' }} ">
+        <div class="col-md-1 <?php echo e($params->enable_cusisine == 1 ? '' : 'd-none'); ?> ">
             <button type="button" class="btn btn-success btn-rounded  btn-fw btn-block click_btn"
                 style="padding: 1em;margin-bottom:10px" id="btnPrintCuisine">Cuisine</button>
         </div>
-        <div class="col-md-1  {{ $params->enable_barman == 1 ? '' : 'd-none' }}">
+        <div class="col-md-1  <?php echo e($params->enable_barman == 1 ? '' : 'd-none'); ?>">
             <button type="button" class="btn btn-success btn-rounded btn-fw btn-block click_btn"
                 style="padding: 1em;margin-bottom:10px" id="btnPrintBar">Barman</button>
         </div>
@@ -385,7 +380,7 @@
                 style="padding: 1em;">Cloturage</a>
         </div>
         <div class="col-md-1">
-            <a href="{{ route('trav.logout') }}" class="btn btn-danger btn-rounded btn-fw btn-block"
+            <a href="<?php echo e(route('trav.logout')); ?>" class="btn btn-danger btn-rounded btn-fw btn-block"
                 style="padding: 1em;"><i class="material-icons">donut_large</i></a>
         </div>
         <div class="col-md-1 " id="remise_btn">
@@ -528,7 +523,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form id="allow_op_form">
-                    {{ csrf_field() }}
+                    <?php echo e(csrf_field()); ?>
+
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Code Manager </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -541,9 +537,9 @@
                                 <label class="d-none"> List Managers : </label>
                                 <select class="d-none form-control select2-single  " name="code_manager_username"
                                     id="code_manager_username">
-                                    @foreach ($managers as $manager)
-                                        <option value="{{ $manager->username }}"> {{ $manager->username }} </option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $managers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $manager): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($manager->username); ?>"> <?php echo e($manager->username); ?> </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                                 <label>Code Manager : </label>
                                 <input autofocus type="password" placeholder="Code Manager" id="code_manager_password"
@@ -601,7 +597,7 @@
     </div>
     <div class="box" id="hiddenbox" style="display: none">
         <div class='inner'>
-            <h1 id="title_ticket_ret">{{ Auth::user()->etab->nom }}</h1>
+            <h1 id="title_ticket_ret"><?php echo e(Auth::user()->etab->nom); ?></h1>
             <div id="info_ticket">
                 <div class='wp'>Ticket :</div>
                 <div class='wp'>Date :</div>
@@ -668,16 +664,16 @@
             </div>
             <center>
                 <h4 id="hidden_ticket_paie_methode">Espece</h4>
-                <h4 id="hidden_ticket_user">Utilisateur : {{ Auth::user()->username }}</h4>
+                <h4 id="hidden_ticket_user">Utilisateur : <?php echo e(Auth::user()->username); ?></h4>
             </center>
             <center>
-                <p>{{ Auth::user()->etab->msg }}</p>
+                <p><?php echo e(Auth::user()->etab->msg); ?></p>
             </center>
         </div>
     </div>
     <div class="box" id="hiddenbox2" style="display: none">
         <div class='inner'>
-            <h1 id="">{{ Auth::user()->etab->nom }}</h1>
+            <h1 id=""><?php echo e(Auth::user()->etab->nom); ?></h1>
             <div id="info_ticket2">
                 <div class='wp'>Ticket :</div>
                 <div class='wp'>Date :</div>
@@ -733,17 +729,17 @@
             </div>
         </div>
     </div>
-@endsection
-@section('script')
-    <script src="{{ url('assets/js/sweetalert2.all.min.js') }}"></script>
-    {{-- <script src="{{url('assets/plugins/keybord/keybord.js')}}"></script> --}}
-    <script src="{{ url('assets/plugins/keybord/dist/kioskboard-aio-1.3.3.min.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(url('assets/js/sweetalert2.all.min.js')); ?>"></script>
+    
+    <script src="<?php echo e(url('assets/plugins/keybord/dist/kioskboard-aio-1.3.3.min.js')); ?>"></script>
     <script>
         KioskBoard.Init({
             keysArrayOfObjects: [{
                 ".": "."
             }],
-            keysJsonUrl: "{{ url('assets/plugins/keybord/dist/kioskboard-keys-english.json') }}",
+            keysJsonUrl: "<?php echo e(url('assets/plugins/keybord/dist/kioskboard-keys-english.json')); ?>",
             specialCharactersObject: null,
             language: 'en',
             theme: 'light',
@@ -775,7 +771,7 @@
         $(document).ready(function() {
             localStorage.removeItem('isManager');
             localStorage.removeItem('nativeManager');
-            localStorage.setItem('nativeManager', {{ Auth::user()->is_manager ? Auth::user()->is_manager : 0 }});
+            localStorage.setItem('nativeManager', <?php echo e(Auth::user()->is_manager ? Auth::user()->is_manager : 0); ?>);
             if (localStorage.getItem('nativeManager') == 1) {
                 console.log('native manager')
                 document.getElementById("remise_btn").classList.add('d-none');
@@ -798,11 +794,11 @@
                 if (e.keyCode === 13) {
                     let searcth_term = $(this).val();
                     $.ajax({
-                        url: "{{ route('trav.search-prod-designation') }}",
+                        url: "<?php echo e(route('trav.search-prod-designation')); ?>",
                         type: 'post',
                         data: {
                             searchTerm: searcth_term,
-                            _token: '{{ csrf_token() }}',
+                            _token: '<?php echo e(csrf_token()); ?>',
                         },
                         success: function(values) {
                             let prods = JSON.parse(values);
@@ -860,11 +856,11 @@
 
 
                         // $.ajax({
-                        // 	url: "{{ route('trav.max_remise') }}",
+                        // 	url: "<?php echo e(route('trav.max_remise')); ?>",
                         // 	type: 'post',
                         // 	data: {
                         // 		code_bar: JSON.stringify(localStorage.getItem('lastest_code_bar')),
-                        // 		_token: '{{ csrf_token() }}',
+                        // 		_token: '<?php echo e(csrf_token()); ?>',
                         // 	},
                         // 	success: function(values) {
                         // 		if (JSON.parse(values) != -1) {
@@ -1569,12 +1565,12 @@
                 let username = $("#code_manager_username").val();
                 let password = $("#code_manager_password").val();
                 $.ajax({
-                    url: "{{ route('trav.allow_op') }}",
+                    url: "<?php echo e(route('trav.allow_op')); ?>",
                     type: 'post',
                     data: {
                         username: username,
                         password: password,
-                        _token: "{{ csrf_token() }}"
+                        _token: "<?php echo e(csrf_token()); ?>"
                     },
                     success: function(data) {
                         document.getElementById("remise_btn").classList.add('d-none');
@@ -1598,7 +1594,7 @@
                 $(this).addClass('active');
                 console.log(cat_nom);
                 $.ajax({
-                    url: "{{ route('trav.get_articles.bycat') }}",
+                    url: "<?php echo e(route('trav.get_articles.bycat')); ?>",
                     type: 'get',
                     data: {
                         id: id_cat
@@ -1704,7 +1700,7 @@
                 var client = $('#client_list').val();
                 var remarque = $('#remarque').val();
                 $.ajax({
-                    url: "{{ route('trav.ticket-bar') }}",
+                    url: "<?php echo e(route('trav.ticket-bar')); ?>",
                     type: 'post',
                     data: {
                         idPrnsl: idPrnsl,
@@ -1717,7 +1713,7 @@
                         paie: paie,
                         client: client,
                         remarque: remarque,
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         if (values.msg == "success") {
@@ -1733,11 +1729,11 @@
                                 values.new_data.remarque.remarque : "  ");
                             settickt(mainticket, null, '#hidden_body_ticket2',
                                 '#hidden_total_ticket2');
-                            @if (Auth::user()->canprint)
+                            <?php if(Auth::user()->canprint): ?>
                                 PrintElem('hiddenbox2');
                                 localStorage.removeItem("ticket-type");
-                            @else
-                            @endif
+                            <?php else: ?>
+                            <?php endif; ?>
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -1768,7 +1764,7 @@
                 var client = $('#client_list').val();
                 var remarque = $('#remarque').val();
                 $.ajax({
-                    url: "{{ route('trav.ticket-cuisine') }}",
+                    url: "<?php echo e(route('trav.ticket-cuisine')); ?>",
                     type: 'post',
                     data: {
                         idPrnsl: idPrnsl,
@@ -1781,7 +1777,7 @@
                         paie: paie,
                         client: client,
                         remarque: remarque,
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         if (values.msg == "success") {
@@ -1798,11 +1794,11 @@
                                 values.new_data.remarque.remarque : "  ");
                             settickt(mainticket, null, '#hidden_body_ticket2',
                                 '#hidden_total_ticket2');
-                            @if (Auth::user()->canprint)
+                            <?php if(Auth::user()->canprint): ?>
                                 PrintElem('hiddenbox2');
                                 localStorage.removeItem("ticket-type");
-                            @else
-                            @endif
+                            <?php else: ?>
+                            <?php endif; ?>
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -1832,7 +1828,7 @@
                 var paie = $('#paie_methode').val();
                 var client = $('#client_list').val();
                 $.ajax({
-                    url: "{{ route('trav.retour') }}",
+                    url: "<?php echo e(route('trav.retour')); ?>",
                     type: 'post',
                     data: {
                         idPrnsl: idPrnsl,
@@ -1844,7 +1840,7 @@
                         table: table,
                         paie: paie,
                         client: client,
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         if (values.msg == "success") {
@@ -1864,18 +1860,18 @@
                             $('#remise').val(0);
                             $('#reste_ticket').hide();
                             $('#Remise_ticket').hide();
-                            @if (Auth::user()->canprint)
+                            <?php if(Auth::user()->canprint): ?>
                                 PrintElem('hiddenbox');
                                 setTimeout(function() {
                                     mainticket = [];
                                     settickt(mainticket, null)
                                 }, 200);
-                            @else
+                            <?php else: ?>
                                 setTimeout(function() {
                                     mainticket = [];
                                     settickt(mainticket, null)
                                 }, 200);
-                            @endif
+                            <?php endif; ?>
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -1925,7 +1921,7 @@
                 var paie = $('#paie_methode').val();
                 var client = $('#client_list').val();
                 $.ajax({
-                    url: "{{ route('trav.ticket') }}",
+                    url: "<?php echo e(route('trav.ticket')); ?>",
                     type: 'post',
                     data: {
                         idPrnsl: idPrnsl,
@@ -1937,7 +1933,7 @@
                         table: table,
                         paie: paie,
                         client: client,
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         if (values.msg == "success") {
@@ -1955,18 +1951,18 @@
                             $('#remise').val(0);
                             $('#reste_ticket').hide();
                             $('#Remise_ticket').hide();
-                            @if (Auth::user()->canprint)
+                            <?php if(Auth::user()->canprint): ?>
                                 PrintElem('hiddenbox');
                                 setTimeout(function() {
                                     mainticket = [];
                                     settickt(mainticket, null)
                                 }, 200);
-                            @else
+                            <?php else: ?>
                                 setTimeout(function() {
                                     mainticket = [];
                                     settickt(mainticket, null)
                                 }, 200);
-                            @endif
+                            <?php endif; ?>
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -2007,7 +2003,7 @@
                 var paie = $('#paie_methode').val();
                 var client = $('#client_list').val();
                 $.ajax({
-                    url: "{{ route('trav.ticket.puase') }}",
+                    url: "<?php echo e(route('trav.ticket.puase')); ?>",
                     type: 'post',
                     data: {
                         idPrnsl: idPrnsl,
@@ -2019,7 +2015,7 @@
                         table: table,
                         paie: paie,
                         client: client,
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         if (values.msg == "success") {
@@ -2052,7 +2048,7 @@
             $("body").on('click', '.pausedtickbtn', function(e) {
                 var id_opt = $(this).data("idopt");
                 $.ajax({
-                    url: "{{ route('trav.ticket.unpause.id', '') }}/" + id_opt,
+                    url: "<?php echo e(route('trav.ticket.unpause.id', '')); ?>/" + id_opt,
                     type: 'get',
                     success: function(values) {
                         console.log(values.data)
@@ -2077,10 +2073,10 @@
             });
             $("#ticktunpause").on('click', function(e) {
                 $.ajax({
-                    url: "{{ route('trav.get.ticket.pauseed') }}",
+                    url: "<?php echo e(route('trav.get.ticket.pauseed')); ?>",
                     type: 'get',
                     data: {
-                        _token: '{{ csrf_token() }}',
+                        _token: '<?php echo e(csrf_token()); ?>',
                     },
                     success: function(values) {
                         console.log(values.text)
@@ -2120,7 +2116,7 @@
             });
             $('.consulte').click(function() {
                 $.ajax({
-                    url: "{{ route('trav.consulte') }}",
+                    url: "<?php echo e(route('trav.consulte')); ?>",
                     type: 'get',
                     success: function(data) {
                         /*$("#example").dataTable().fnDestroy();*/
@@ -2139,7 +2135,7 @@
 				<td>${cloturage}</td>
 				<td>${value.date_operation}</td>
 				<td>
-					<a  href="{{ url('trav/delete-opt/') }}/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick  btn btn-danger btn-sm">
+					<a  href="<?php echo e(url('trav/delete-opt/')); ?>/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick  btn btn-danger btn-sm">
                      <i class="material-icons">close</i> </a>
 				 </td>
 				</tr>`);
@@ -2157,7 +2153,7 @@
 				<td>${cloturage}</td>
 				<td>${value.date_operation}</td>
 				<td>
-					<a  href="{{ url('trav/delete-opt/') }}/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick d-none btn btn-danger btn-sm">
+					<a  href="<?php echo e(url('trav/delete-opt/')); ?>/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick d-none btn btn-danger btn-sm">
                      <i class="material-icons">close</i> </a>
 				 </td>
 				</tr>`);
@@ -2177,7 +2173,7 @@
 				<td>${cloturage}</td>
 				<td>${value.date_operation}</td>
 				<td>
-					<a  href="{{ url('trav/delete-opt/') }}/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick btn btn-danger btn-sm">
+					<a  href="<?php echo e(url('trav/delete-opt/')); ?>/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" btn-delete-tick btn btn-danger btn-sm">
                      <i class="material-icons">close</i> </a>
 				 </td>
 				</tr>`);
@@ -2187,7 +2183,7 @@
 				<td>${cloturage}</td>
 				<td>${value.date_operation}</td>
 				<td>
-					<a  href="{{ url('trav/delete-opt/') }}/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" d-none btn-delete-tick btn btn-danger btn-sm">
+					<a  href="<?php echo e(url('trav/delete-opt/')); ?>/${value.id}/"  onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cette operation');" class=" d-none btn-delete-tick btn btn-danger btn-sm">
                      <i class="material-icons">close</i> </a>
 				 </td>
 				</tr>`);
@@ -2200,7 +2196,7 @@
             ///@@@@@@@@@@@@@@@@@@ Imprimer_Cloturage @@@@@@@@@@@
             $('#Imprimer_Cloturage').click(function() {
                 $.ajax({
-                    url: "{{ route('trav.Imprimer_Cloturage') }}",
+                    url: "<?php echo e(route('trav.Imprimer_Cloturage')); ?>",
                     type: 'get',
                     success: function(data) {
                         PrintDiv(data);
@@ -2213,7 +2209,7 @@
                 var id = $(this).data('id');
                 console.log(id);
                 $.ajax({
-                    url: "{{ route('trav.tableOperationConsult') }}",
+                    url: "<?php echo e(route('trav.tableOperationConsult')); ?>",
                     type: 'get',
                     data: {
                         id: id
@@ -2234,7 +2230,7 @@
                                 '</td><td>' + value.qte_prod + ' ' + qte +
                                 '</td></tr>');
                         });
-                        @if (Auth::user()->canprint)
+                        <?php if(Auth::user()->canprint): ?>
                             $('#tableProdConsult').append(
                                 `<tr >
 							<td col="3">
@@ -2242,7 +2238,7 @@
 								 style="" id="btnPrintcon" >Imprimer</button>
 							</td>
 						</tr>`);
-                        @endif
+                        <?php endif; ?>
                     },
                     error: function(values) {
                         swal("il y a un problem technique...", "error");
@@ -2252,7 +2248,7 @@
             $('.cloturage').click(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: "{{ route('trav.cloturage') }}",
+                    url: "<?php echo e(route('trav.cloturage')); ?>",
                     type: 'get',
                     success: function(data) {
                         console.log(data);
@@ -2272,7 +2268,7 @@
                             }).then((result) => {
                                 if (result.value) {
                                     $.ajax({
-                                        url: "{{ route('trav.cloturage.confirm') }}",
+                                        url: "<?php echo e(route('trav.cloturage.confirm')); ?>",
                                         type: 'get',
                                         success: function(data) {
                                             console.log(data)
@@ -2306,7 +2302,7 @@
             $('.mode').click(function() {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: "{{ route('trav.modeCaisse') }}",
+                    url: "<?php echo e(route('trav.modeCaisse')); ?>",
                     type: 'get',
                     data: {
                         id: id
@@ -2323,7 +2319,7 @@
                 if (e.keyCode === 13) {
                     $.ajax({
                         type: "get",
-                        url: "{{ route('trav.getprodbycode_bar') }}",
+                        url: "<?php echo e(route('trav.getprodbycode_bar')); ?>",
                         data: {
                             code_bar: valu.val(),
                             qte: $("#qte_scan").val()
@@ -2343,7 +2339,7 @@
             $("body").on('click', '#btnPrintcon', function(e) {
                 var id_opt = $(this).data("id");
                 $.ajax({
-                    url: "{{ route('trav.ticket.opt', '') }}/" + id_opt,
+                    url: "<?php echo e(route('trav.ticket.opt', '')); ?>/" + id_opt,
                     type: 'get',
                     success: function(values) {
                         console.log(values.data)
@@ -2490,7 +2486,7 @@
                     document.querySelectorAll('.hide_bar').forEach(x => x.classList.add('d-none'));
                 }
                 mywindow.document.write('<html><head>');
-                mywindow.document.write("<link href=\"{{ url('assets/css/ticket.css') }}\" rel=\"stylesheet\">")
+                mywindow.document.write("<link href=\"<?php echo e(url('assets/css/ticket.css')); ?>\" rel=\"stylesheet\">")
                 mywindow.document.write('</head><body >');
                 mywindow.document.write(document.getElementById(elem).innerHTML);
                 mywindow.document.write('</body></html>');
@@ -2523,4 +2519,6 @@
         $('#hidden_Remise_ticket').hide();
         $('#Remise_ticket').hide();
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Trav.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\pointvente.sys\resources\views/Trav/index.blade.php ENDPATH**/ ?>
