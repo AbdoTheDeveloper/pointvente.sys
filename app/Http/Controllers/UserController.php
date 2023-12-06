@@ -38,6 +38,7 @@ class UserController  extends Controller
 
 
 
+    
     public function index()
     {
       
@@ -61,7 +62,7 @@ class UserController  extends Controller
 
          
         $classes_arr = DB::table('prods')->select('*')->where("qte", "<=" , "qte_alert")->get() ; 
-        dd($classes_arr) ; 
+        
 
         $classes = Travailleur::all()->count();
 

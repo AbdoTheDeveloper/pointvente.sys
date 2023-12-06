@@ -2343,14 +2343,13 @@
             $("body").on('click', '#btnPrintcon', function(e) {
                 var id_opt = $(this).data("id");
                 $.ajax({
-                    url: "{{ route('trav.ticket.opt', '') }}/" + id_opt,
+                    url: "{{ route('trav.ticket.opt', '') }}/" + id_opt ,
                     type: 'get',
                     success: function(values) {
                         console.log(values.data)
                         ticketcons = [];
                         if (values.msg == "success") {
-                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom ?? ' ' +
-                                " " + values.data.eleve.prenom ?? ' ');
+                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom ?? ' ' +" " + values.data.eleve.prenom ?? ' ');
                             $('#hidden_ticket_num').text(values.data.tickt.numtick);
                             $('#hidden_ticket_date').text(values.data.tickt.date_operation);
                             $('#hidden_ticket_table').text(values.new_data.table?.nom ?? '');
@@ -2414,16 +2413,16 @@
             function changeRemise() {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : $('#hidden_remise_model').val();
                 //var totalTic = $('#total_a_payer').val();
-                var re_total += remise * parseInt($("#qte_scan").val()) ; 
+                 // var re_total += remise * parseInt($("#qte_scan").val()) ; 
                 if (remise > 0) {
                     $('#Remise_ticket').show();
                     if (remise <= remise_max) {
                         $('#Remise_ticket').html(
-                            `<h2>Remise : <p>${re_total}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                            `<h2>Remise : <p>${remise}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
                         );
                     } else {
                         $('#Remise_ticket').html(
-                            `<h2>Remise : <p>${re_total}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                            `<h2>Remise : <p>${remise }%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
                         );
                     }
 

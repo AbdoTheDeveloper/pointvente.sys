@@ -20,7 +20,8 @@ class Prod extends Model
 		'type',
 		'code_bar',
 		'unite',
-		'remise_max'
+		'remise_max',
+		'id_frns'
     ];
   
 }

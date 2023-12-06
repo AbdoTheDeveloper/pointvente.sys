@@ -10,6 +10,7 @@ use DB;
 use Carbon\Carbon;
 use App\Model\Categorie;
 use App\Model\Travailleur;
+use App\Model\Fornisseur;
 
 class ProdController extends Controller
 {
@@ -26,6 +27,7 @@ class ProdController extends Controller
     public function index()
     {
         $cats = Categorie::all();
+
         return view('Admin.article.index')->with('cats', $cats);
     }
 
@@ -33,7 +35,8 @@ class ProdController extends Controller
     {
         $cats = Categorie::all();
         $travs = Travailleur::all();
-        return view('Admin.article.add')->with('cats', $cats)->with('travs', $travs);
+        $fournisseurs = Fornisseur::all() ; 
+        return view('Admin.article.add')->with('cats', $cats)->with('travs', $travs)->with('fournisseurs',$fournisseurs);
     }
 
     public function inventaire()
@@ -118,6 +121,7 @@ class ProdController extends Controller
         $prod->img = $img;
         $prod->qte = $request->qte;
         $prod->remise_max = $request->remise_max;
+        $prod->id_frns =$request->id_frns ;
 
 
         $prod->save();
@@ -217,7 +221,8 @@ class ProdController extends Controller
         $prod = Prod::find($id);
         $cats = Categorie::all();
         $travs = Travailleur::all();
-        return view('Admin.article.edit')->with('prod', $prod)->with('cats', $cats)->with('travs', $travs);
+        $fournisseurs = Fornisseur::all()  ;
+        return view('Admin.article.edit')->with('prod', $prod)->with('cats', $cats)->with('travs', $travs)->with('fournisseurs' , $fournisseurs);
     }
 
     public function update(Request $request, Prod $prod)
@@ -259,6 +264,7 @@ class ProdController extends Controller
         $prod->unite = $request->unite;
         $prod->remise_max = $request->remise_max;
         $prod->qte = $request->qte;
+        $prod->id_frns = $request->id_frns ; 
 
 
 

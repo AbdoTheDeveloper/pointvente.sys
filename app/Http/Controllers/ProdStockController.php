@@ -22,13 +22,9 @@ public function __construct()
     public function index($id)
     {
         $prods = ProdStock::selectRaw('prod_stocks.id as iddetail,prod_stocks.*,prods.*')
-        
         -> where('id_operationStock',$id)
         ->join('prods','prods.id','prod_stocks.id_prod')
-        ->get();
-
-
-       
+        ->get();       
         return view("Admin.stock.detail.index",['prods'=>$prods,"id"=>$id]);
     }
 
@@ -97,21 +93,26 @@ public function __construct()
         $cats = Categorie::all();
         return view('Admin.stock.detail.add',["id"=>$id,"cats"=>$cats]);
     }
-    public function save(Request $value)
+    public function save(Request $request)
     {
+
+        // dd($request->all()) ; 
+        foreach( $request->operation as $operation){
             $stock = new ProdStock;
             $stock->id_user = Auth::user()->id;
-            $stock->id_operationStock = $value->id_operationStock;
-            $stock->id_prod = $value->id_prod;
-            $stock->qteEntrer = $value->qte;
-            $stock->prixEntre = $value->prix;
+            $stock->id_operationStock = $request->id_operationStock;
+            $stock->id_prod = $operation['Prod'];
+            $stock->qteEntrer = $operation['Quantité'];
+            $stock->prixEntre = $operation['Prix'];
             $stock->save();
-            $prod = Prod::where('id', $value->id_prod)->first();
+            $prod = Prod::where('id', $operation['Prod'])->first();
             $qte=$prod->qte;
-            $prod->qte=$qte+ $value->qte;
+            $prod->qte=$qte+ $operation['Quantité'];
             $prod->save();
 
-            return redirect(route('admin.detail.stock.index',['id' =>$value->id_operationStock]));
+        }
+        
+            return redirect(route('admin.detail.stock.index',['id' =>$request->id_operationStock]));
 
     }
 

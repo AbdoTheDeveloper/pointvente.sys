@@ -57,9 +57,8 @@
                                                             <th>Prix Achat</th>
                                                             <th>Prix Vente</th>
                                                             <th>Quantité</th>
-                                                            <th>Quantité alerte </th>
-                                                            
-                                                            <th></th>
+                                                            <th>Fournisseur </th>
+                                                            <th>Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="list" id="search">

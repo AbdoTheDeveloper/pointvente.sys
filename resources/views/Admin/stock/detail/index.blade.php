@@ -84,7 +84,7 @@
                                                                   }
                                                                   
                                                                   ?></td>
-                                                              <td>{{$item->qte}}</td>
+                                                              <td>{{$item->qteEntrer}}</td>
                                                               <td>{{$item->prixEntre}}</td>
                                                               <td>
                                                                 <a  href="{{ route('admin.detail.stock.delete',["id"=>$item->iddetail]) }}" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément');" class="btn btn-danger btn-sm">

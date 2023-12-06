@@ -710,9 +710,6 @@ class TravailleurController extends Controller
         $operation->id_client = $data->client;
         $operation->methode_paie = $data->paie;
 
-
-
-
         $operation->save();
 
 
@@ -727,12 +724,12 @@ class TravailleurController extends Controller
             $detailOperation->id_trav = Auth::user()->id;
             $detailOperation->id_operation = $operation->id;
             $detailOperation->id_prod = $value['idProd'];
-
             $detailOperation->prix = $value['prix']; 
-
-            if( array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" && $value['unite'] == "kg") ){
+            if( array_key_exists("code_bar", $value) && strlen($value['code_bar']) > 7 && startsWith($value['code_bar'] , "21" ) && $value['unite'] == "kg" ){
                 $detailOperation->qte_prod = substr($value['code_bar'] ,7 , 5) / 1000 ;
-            } else {$detailOperation->qte_prod = $value['qte'];}
+            } else { 
+                $detailOperation->qte_prod = $value['qte'];
+            }
             
 
 
@@ -748,7 +745,9 @@ class TravailleurController extends Controller
                 $result = DB::table("prods")->select('qte')->where("id","=",$prod->id)->first() ;
                 $newqte = $result->qte - $qte ;   
              } else {
+                $result = DB::table("prods")->select('qte')->where("id","=",$prod->id)->first() ;
                 $qte = $value['qte'];
+                $newqte = $result->qte - $qte ; 
                 }
             
 
