@@ -180,7 +180,7 @@
                             <p> 00.00 DH</p>
                         </h2>
                     </div>
-                    <div class='total clearfix' id="Remise_ticket" style="">
+                    <div class='total clearfix' id="Remise_ticket" style="display:none">
                         <h2>
                             Remise :
                             <p> 00.00 DH</p>
@@ -651,7 +651,7 @@
                     <p> 00.00 DH</p>
                 </h3>
             </div>
-            <div class='total clearfix' id="hidden_Remise_ticket" style="display: none">
+            <div class='total clearfix' id="hidden_Remise_ticket" style="display:none">
                 <h3>
                     Remise :
                     <p> 00.00 DH</p>
@@ -841,10 +841,16 @@
             var remise_tot = 0;
             var remise_max;
             var totalTicketDHSansRemise = 0;
+            var re_total = 0 ;
 
             function settickt(arraytick, data, body_ticket = "#body_ticket", total_ticket = "#total_ticket") {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : 0;
+                if (data) {
+                    remise_max = data.remise_max;
+                }
+
                 var inserted_remise = $("#remise").val() ? $("#remise").val() : 0;
+
 
                 if (remise > 0) {
                     setTimeout(function() {
@@ -869,7 +875,6 @@
                         var i = 0;
                         if (data) {
                             if (remise > data.remise_max) {
-                                console.log("remise greater than remise max ");
                                 remise = data?.remise_max
                             }
 
@@ -883,43 +888,224 @@
                                     return;
                                 }
                             });
+                            // if (!is_exist) {
+                            //     $(body_ticket).html('');
+                            //     var newprix = 0;
+                            //     var newqte = 0;
+                            //     var prix_sans_remise = 0;
+                            //     // if (data.uniteog == "kg") {
+                            //     //     if (data.unite == "kg") {
+                            //     //         newqte = parseFloat(data.qte);
+                            //     //         newprix += parseFloat(data.prix) * parseFloat(data.qte);
+
+                            //     //     } else {
+                            //     //         newqte = parseFloat(data.qte) / 1000;
+                            //     //         newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
+                            //     //     }
+                            //     // } else if (data.uniteog == "g") {
+                            //     //     if (data.unite == "kg") {
+                            //     //         newqte = parseFloat(data.qte) * 1000;
+                            //     //         newprix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
+
+                            //     //     } else {
+
+                            //     //         newqte = parseFloat(data.qte);
+                            //     //         newprix += parseFloat(data.prix) * (parseFloat(data.qte));
+                            //     //     }
+                            //     // } else {
+                            //     //     newqte = parseFloat(data.qte);
+                            //     //     newprix = parseFloat(data.prix) * parseFloat(data.qte) - ((parseFloat(
+                            //     //         data.prix) * parseFloat(data.qte)) * remise / 100).toFixed(2);
+
+                            //     //     remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise / 100).toFixed(2);
+                            //     //     prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                            //     // }
+
+
+                            //     if (data.uniteog == "kg") { 
+                            //         if (data.unite == "kg") {
+                            //             newqte = parseFloat(data.qte);
+                            //             // newprix += parseFloat(data.prix) * parseFloat(data.qte);
+                            //             newprix += parseFloat(data.prix) * parseFloat(data.qte) - ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /100).toFixed(2);
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte) ; 
+                            //             remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+
+                            //         } else {
+                            //             newqte = parseFloat(data.qte) / 1000;
+                            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte) / 1000  - ((parseFloat(data.prix) * parseFloat(data.qte) / 1000) * remise /100).toFixed(2);
+                            //             remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+
+                            //         }
+                            //     } else if (data.uniteog == "g") {
+                            //         if (data.unite == "kg") {
+                            //             newqte =  parseFloat(data.qte) * 1000;
+                            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte) *1000) - ((parseFloat(data.prix) * parseFloat(data.qte) * 1000) * remise /100).toFixed(2);
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte) *
+                            //                 1000 ; 
+                            //                 remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         } else {
+                            //             newqte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+                            //             newprix += parseFloat(data.prix) * (parseFloat(data.qte)) - ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /100).toFixed(2);;
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
+                            //             remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         }
+                            //     } else {
+                            //         newqte = parseFloat(data.qte) + parseFloat(data.qte);
+                            //         newprix += parseFloat(data.prix) * parseFloat(data.qte) - ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /100).toFixed(2);
+                            //         remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /100).toFixed(2);
+                            //         prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
+
+                            //     }
+
+
+
+
+                            //     if (localStorage.getItem("isRetour")) {
+                            //         console.log("is retour")
+
+
+                            //         arraytick.push({
+                            //             idProd: data.id,
+                            //             prix: -newprix,
+                            //             qte: -newqte,
+                            //             name: data.name,
+                            //             unite: data.uniteog,
+                            //             type_prod: data.type_prod,
+                            //             prix_sans_remise: prix_sans_remise,
+                            //             max_remise: remise,
+                            //             code_bar: data.code_bar
+                            //         });
+                            //     } else {
+                            //         console.log("is not retour")
+                            //         arraytick.push({
+                            //             idProd: data.id,
+                            //             prix: newprix,
+                            //             qte: newqte,
+                            //             name: data.name,
+                            //             unite: data.uniteog,
+                            //             type_prod: data.type_prod,
+                            //             prix_sans_remise: prix_sans_remise,
+                            //             max_remise: remise,
+                            //             code_bar: data.code_bar
+                            //         });
+                            //     }
+                            // } else {
+
+                            //     if (arraytick[i].unite == "kg") {
+                            //         if (data.unite == "kg") {
+                            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+                            //             arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
+                            //             arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
+                            //                 data.qte)
+                            //                 remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         } else {
+                            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
+                            //                 .qte) / 1000;
+                            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) /
+                            //                 1000);
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte) /
+                            //                 1000
+                            //             arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
+                            //                 data.qte) / 1000 ; 
+                            //                 remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         }
+                            //     } else if (arraytick[i].unite == "g") {
+                            //         if (data.unite == "kg") {
+                            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
+                            //                 .qte) * 1000;
+                            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) *
+                            //                 1000);
+
+
+                            //             arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
+                            //                 data.qte) * 1000
+                            //                 remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         } else {
+                            //             arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
+                            //                 .qte);
+                            //             arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte));
+                            //             prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
+                            //             arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
+                            //                 data.qte)
+                            //                 remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         }
+                            //     } else {
+                            //         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+                            //         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte) - ((
+                            //                 parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                            //             100).toFixed(2);
+                            //         prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
+                            //         arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(data
+                            //             .qte)
+                            //     }
+                            // }
+
+
+
+
                             if (!is_exist) {
+
                                 var newprix = 0;
                                 var newqte = 0;
                                 var prix_sans_remise = 0;
+
+
+
+
                                 if (data.uniteog == "kg") {
+
                                     if (data.unite == "kg") {
-                                        $(body_ticket).html('');
                                         newqte = parseFloat(data.qte);
                                         newprix += parseFloat(data.prix) * parseFloat(data.qte);
-
+                                        prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                                        remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                                        100).toFixed(2);
+                                        // re_total += remise * data.qte 
                                     } else {
                                         newqte = parseFloat(data.qte) / 1000;
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
+                                        prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                                        remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                                        100).toFixed(2);
                                     }
+
                                 } else if (data.uniteog == "g") {
                                     if (data.unite == "kg") {
                                         newqte = parseFloat(data.qte) * 1000;
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte) * 1000);
-
+                                        prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                                        remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                                        100).toFixed(2);
                                     } else {
-
                                         newqte = parseFloat(data.qte);
                                         newprix += parseFloat(data.prix) * (parseFloat(data.qte));
+                                        prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
+                                        remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
+                                        100).toFixed(2);
                                     }
                                 } else {
                                     newqte = parseFloat(data.qte);
                                     newprix = parseFloat(data.prix) * parseFloat(data.qte) - ((parseFloat(
                                         data.prix) * parseFloat(data.qte)) * remise / 100).toFixed(2);
-
                                     remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
                                         100).toFixed(2);
                                     prix_sans_remise = parseFloat(data.prix) * parseFloat(data.qte);
                                 }
+
                                 if (localStorage.getItem("isRetour")) {
                                     console.log("is retour")
-
-
                                     arraytick.push({
                                         idProd: data.id,
                                         prix: -newprix,
@@ -928,8 +1114,8 @@
                                         unite: data.uniteog,
                                         type_prod: data.type_prod,
                                         prix_sans_remise: prix_sans_remise,
-                                        max_remise: remise,
-                                        code_bar: data.code_bar
+                                        max_remise: remise ,
+                                        code_bar : code_bar
                                     });
                                 } else {
                                     console.log("is not retour")
@@ -941,12 +1127,19 @@
                                         unite: data.uniteog,
                                         type_prod: data.type_prod,
                                         prix_sans_remise: prix_sans_remise,
-                                        max_remise: remise,
-                                        code_bar: data.code_bar
+                                        max_remise: remise ,
+                                        code_bar : code_bar
                                     });
                                 }
+
+
+
                             } else {
+
+
+
                                 if (arraytick[i].unite == "kg") {
+
                                     if (data.unite == "kg") {
                                         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
                                         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
@@ -963,6 +1156,7 @@
                                         arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
                                             data.qte) / 1000
                                     }
+
                                 } else if (arraytick[i].unite == "g") {
                                     if (data.unite == "kg") {
                                         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
@@ -986,12 +1180,14 @@
                                     arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte) - ((
                                             parseFloat(data.prix) * parseFloat(data.qte)) * remise /
                                         100).toFixed(2);
-                                    remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise /
-                                        100).toFixed(2);
+                                    remise_tot += ((parseFloat(data.prix) * parseFloat(data.qte)) * remise / 100).toFixed(2);
+
                                     prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
                                     arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(data
                                         .qte)
+
                                 }
+
                             }
                         }
                         if (localStorage.getItem("isRetour") == 1) {
@@ -1000,13 +1196,14 @@
                                 totalTicketDH = parseFloat(totalTicketDH) - parseFloat(arraytick[
                                     index].prix);
                             });
+                            $(body_ticket).html('');
                             $.each(arraytick, function(key, value) {
                                 $(body_ticket).append(`
         							<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
         								<div class='wp'> -${value.name}</div>
         								<div class='wp'> - ${value.qte.toFixed(2)}</div>
         								<div class='wp'>- ${value.prix_sans_remise.toFixed(2)}</div>
-        								// <div class='wp'>${value.max_remise ?? 0 } %</div>
+        								<div class='wp'>${value.max_remise * value.qte?? 0 } %</div>
         							</div>`);
                             });
                             // <div class='wp'>${value.max_remise ?? 0 } %</div>
@@ -1016,25 +1213,26 @@
                             totalTicketDH = 0;
                             totalTicketDHSansRemise = 0;
                             $.each(arraytick, function(index, val) {
-                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[
-                                    index].prix);
+                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix - arraytick[index].prix *  (arraytick[index].max_remise * arraytick[index].qte) /100 );
+
                                 totalTicketDHSansRemise = parseFloat(totalTicketDHSansRemise) +
                                     parseFloat(arraytick[index].prix_sans_remise);
                             });
                             console.log("TICKT PROD : ", arraytick);
+                            $(body_ticket).html('');
                             $.each(arraytick, function(key, value) {
 
                                 $(body_ticket).append(`
         							<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
         								<div class='wp'> ${value.name}</div>
         								<div class='wp'> x ${value.qte.toFixed(2)}</div>
-        								<div class='wp'>${value.prix.toFixed(2)}</div>
-        								<div class='wp'>${value.max_remise ?? 0 } %</div>
+        								<div class='wp'>${value.prix_sans_remise}</div>
+        								<div class='wp'>${value.max_remise * value.qte?? 0} %</div>
         							</div>`);
                                 return;
                             });
                         }
-                        
+
                         if ($("#paie_methode").val() == "offert") {
                             $(total_ticket).html(
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDHSansRemise.toFixed(2)} DH</p></h2>` +
@@ -1059,7 +1257,7 @@
                                 `<h2 class="offer-price" style="font-size:1.7rem">Total : <p> 0.00 DH</p></h2>` +
                                 `<h2 class="calculated-price" style="font-size:1.7rem">Total : <p> ${totalTicketDH.toFixed(2)} DH</p></h2>`
                             );
-                            console.log(totalTicketDH);
+
                             document.querySelectorAll('.calculated-price').forEach(x => x.classList.remove(
                                 'd-none'))
                             document.querySelectorAll('.offer-price').forEach(x => x.classList.add(
@@ -1099,8 +1297,16 @@
                             var newqte = 0;
                             if (data.uniteog == "kg") {
                                 if (data.unite == "kg") {
-                                    newqte = parseFloat(data.qte);
-                                    newprix += parseFloat(data.prix) * parseFloat(data.qte);
+                                   
+                                    if(data.code_bar.length > 7 && data.code_bar.startsWith('21') ){
+                                        poids = parseFloat(data.code_bar.slice(7, 12) / 1000)  
+                                        newprix = parseFloat(data.prix) * poids;
+                                        newqte = poids ; 
+                                    }else{
+                                        newprix += parseFloat(data.prix) * parseFloat(data.qte);
+                                        newqte = parseFloat(data.qte);
+                                    }
+                                   
                                 } else {
                                     newqte = parseFloat(data.qte) / 1000;
                                     newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
@@ -1143,8 +1349,16 @@
                         } else {
                             if (arraytick[i].unite == "kg") {
                                 if (data.unite == "kg") {
-                                    arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
-                                    arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+                                   
+                                   
+                                    if(data.code_bar.length > 7 && data.code_bar.startsWith('21') ){
+                                        poids =  parseFloat(data.code_bar.slice(7, 12) / 1000)  
+                                        arraytick[i].prix += parseFloat(data.prix) * poids;
+                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + poids;
+                                    }else{
+                                         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+                                         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+                                    }
                                 } else {
                                     arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) / 1000;
                                     arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
@@ -1182,57 +1396,61 @@
         							</div>`);
                         });
                         $('#total_a_payer').val(totalTicketDH);
-                        
+
                     } else {
                         // if(exist)
                         totalTicketDH = 0;
                         $.each(arraytick, function(index, val) {
-                            if (arraytick[index].code_bar) {
-                                poids = arraytick[index].code_bar.slice(7, 12);
-                                if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith("21") && arraytick[index].code_bar.length > 7) {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                    .prix * ((poids * arraytick[index].qte) / 1000)));
-                                } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
-                                .startsWith("21") && arraytick[index].code_bar.length > 7) {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                    .prix * poids));
-                                } else {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
-                                }
+                            // if (arraytick[index].code_bar) {
+                            //     poids = arraytick[index].code_bar.slice(7, 12);
+                            //     if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith(
+                            //             "21") && arraytick[index].code_bar.length > 7) {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                            //             .prix * ((poids * arraytick[index].qte) / 1000)));
+                            //     } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
+                            //         .startsWith("21") && arraytick[index].code_bar.length > 7) {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                            //             .prix * poids));
+                            //     } else {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
+                            //             .prix);
+                            //     }
 
-                            } else {
+                            // } else {
                                 totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
 
-                            }
+                            // }
                         });
                         $.each(arraytick, function(key, value) {
-                            quantité = 0
-                            if (value.code_bar) {
-                                if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar.length > 7) {
-                                    poids = 0;
-                                    poids = value.code_bar.slice(7, 12);
-                                    quantité = (value.qte * poids) / 1000;
-                                } else if (value.unite == "g" && value.code_bar.startsWith("21") && value.code_bar.length > 7) {
-                                    poids = 0;
-                                    poids = value.code_bar.slice(7,12 );
-                                    quantité = value.qte * poids;
-                                } else {
-                                    quantité = value.qte;
+                            // quantité = 0
+                            // if (value.code_bar) {
+                            //     if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar
+                            //         .length > 7) {
+                            //         poids = 0;
+                            //         poids = value.code_bar.slice(7, 12);
+                            //         quantité = (value.qte * poids) / 1000;
+                            //     } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
+                            //         .code_bar.length > 7) {
+                            //         poids = 0;
+                            //         poids = value.code_bar.slice(7, 12);
+                            //         quantité = value.qte * poids;
+                            //     } else {
+                            //         quantité = value.qte;
 
-                                }
-                            } else {
-                                quantité = value.qte;
-                            }
+                            //     }
+                            // } else {
+                            //     quantité = value.qte;
+                            // }
 
                             $(body_ticket).append(`
         							<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
         								<div class='wp'> ${value.name}</div>
-        								<div class='wp'> x ${quantité.toFixed(2)} </div>
+        								<div class='wp'> x ${value.qte.toFixed(2)} </div>
         								<div class='wp'>${value.prix.toFixed(2)}  </div>
                                         <div class='wp'>${0}</div>
         							</div>`);
                         });
-                       
+
                         $('#total_a_payer').val(totalTicketDH);
                     }
                     if ($("#paie_methode").val() == "offert") {
@@ -1584,8 +1802,10 @@
                             $('#hidden_ticket_date2').text(values.data.tickt.date_operation);
                             $('#hidden_ticket_table2').text(values.new_data.table ? values
                                 .new_data.table.nom : "  ");
-                            $('#hidden_ticket_client2').text(values.new_data.client ? values.new_data.client.nom : "  ");
-                            $('.info_t      icket_detail_cuisine2').text(values.new_data.remarque ?
+                            $('#hidden_ticket_client2').text(values.new_data.client ? values
+                                .new_data.client.nom : "  ");
+                            $('.info_t      icket_detail_cuisine2').text(values.new_data
+                                .remarque ?
                                 values.new_data.remarque.remarque : "  ");
                             settickt(mainticket, null, '#hidden_body_ticket2',
                                 '#hidden_total_ticket2');
@@ -1732,12 +1952,16 @@
                     },
                     success: function(values) {
                         if (values.msg == "success") {
-                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom + " " + values.data.eleve.prenom);
+                            $('#hidden_nomeleve_ticket').text(values.data.eleve.nom + " " +
+                                values.data.eleve.prenom);
                             $('#hidden_ticket_num').text(values.data.tickt.numtick);
                             $('#hidden_ticket_date').text(values.data.tickt.date_operation);
-                            $('#hidden_ticket_table').text(values.new_data.table ? values.new_data.table.nom : "  ");
-                            $('#hidden_ticket_client').text(values.new_data.client ? values.new_data.client.nom : "  ");
-                            settickt(mainticket, null, '#hidden_body_ticket','#hidden_total_ticket');
+                            $('#hidden_ticket_table').text(values.new_data.table ? values
+                                .new_data.table.nom : "  ");
+                            $('#hidden_ticket_client').text(values.new_data.client ? values
+                                .new_data.client.nom : "  ");
+                            settickt(mainticket, null, '#hidden_body_ticket',
+                                '#hidden_total_ticket');
                             $('#prix_payer').val(0);
                             $('#remise').val(0);
                             $('#reste_ticket').hide();
@@ -2042,7 +2266,7 @@
                     url: "<?php echo e(route('trav.cloturage')); ?>",
                     type: 'get',
                     success: function(data) {
-                        console.log(data) ;
+                        console.log(data);
                         if (data != "") {
                             Swal.fire({
                                 title: 'votre cloturage est',
@@ -2201,18 +2425,27 @@
             function changeRemise() {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : $('#hidden_remise_model').val();
                 //var totalTic = $('#total_a_payer').val();
+                // var re_total += remise * parseInt($("#qte_scan").val()) ; 
                 if (remise > 0) {
                     $('#Remise_ticket').show();
-                    $('#Remise_ticket').html(
-                        `<h2>Remise : <p>${$('#remise').val()}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
-                    );
-                    $('#hidden_Remise_ticket').show();
+                    if (remise <= remise_max) {
+                        $('#Remise_ticket').html(
+                            `<h2>Remise : <p>${remise}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                        );
+                    } else {
+                        $('#Remise_ticket').html(
+                            `<h2>Remise : <p>${remise_max}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                        );
+                    }
+
+
+                    document.getElementById('#hidden_Remise_ticket').style.display = "";
                     $('#hidden_Remise_ticket').html(
                         `<h2>Remise : <p>${$('#remise').val()}%</p> <br> Montant : <p> ${(totalTicketDH ).toFixed(2) } DH</p></h2>`
                     );
                 } else {
-                    $('#hidden_Remise_ticket').hide();
-                    $('#Remise_ticket').hide();
+                    // $('#hidden_Remise_ticket').hide();
+                    // $('#Remise_ticket').hide();
                 }
             }
         });

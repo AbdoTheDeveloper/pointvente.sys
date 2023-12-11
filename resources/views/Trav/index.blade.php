@@ -1144,8 +1144,7 @@
                                 if (arraytick[i].unite == "kg") {
 
                                     if (data.unite == "kg") {
-                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data
-                                            .qte);
+                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
                                         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
                                         prix_sans_remise += parseFloat(data.prix) * parseFloat(data.qte)
                                         arraytick[i].prix_sans_remise += parseFloat(data.prix) * parseFloat(
@@ -1301,8 +1300,16 @@
                             var newqte = 0;
                             if (data.uniteog == "kg") {
                                 if (data.unite == "kg") {
-                                    newqte = parseFloat(data.qte);
-                                    newprix += parseFloat(data.prix) * parseFloat(data.qte);
+                                   
+                                    if(data.code_bar.length > 7 && data.code_bar.startsWith('21') ){
+                                        poids = parseFloat(data.code_bar.slice(7, 12) / 1000)  
+                                        newprix = parseFloat(data.prix) * poids;
+                                        newqte = poids ; 
+                                    }else{
+                                        newprix += parseFloat(data.prix) * parseFloat(data.qte);
+                                        newqte = parseFloat(data.qte);
+                                    }
+                                   
                                 } else {
                                     newqte = parseFloat(data.qte) / 1000;
                                     newprix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
@@ -1345,8 +1352,16 @@
                         } else {
                             if (arraytick[i].unite == "kg") {
                                 if (data.unite == "kg") {
-                                    arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
-                                    arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+                                   
+                                   
+                                    if(data.code_bar.length > 7 && data.code_bar.startsWith('21') ){
+                                        poids =  parseFloat(data.code_bar.slice(7, 12) / 1000)  
+                                        arraytick[i].prix += parseFloat(data.prix) * poids;
+                                        arraytick[i].qte = parseFloat(arraytick[i].qte) + poids;
+                                    }else{
+                                         arraytick[i].prix += parseFloat(data.prix) * parseFloat(data.qte);
+                                         arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte);
+                                    }
                                 } else {
                                     arraytick[i].qte = parseFloat(arraytick[i].qte) + parseFloat(data.qte) / 1000;
                                     arraytick[i].prix += parseFloat(data.prix) * (parseFloat(data.qte) / 1000);
@@ -1389,52 +1404,51 @@
                         // if(exist)
                         totalTicketDH = 0;
                         $.each(arraytick, function(index, val) {
-                            if (arraytick[index].code_bar) {
-                                poids = arraytick[index].code_bar.slice(7, 12);
-                                if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith(
-                                        "21") && arraytick[index].code_bar.length > 7) {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                        .prix * ((poids * arraytick[index].qte) / 1000)));
-                                } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
-                                    .startsWith("21") && arraytick[index].code_bar.length > 7) {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
-                                        .prix * poids));
-                                } else {
-                                    totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
-                                        .prix);
-                                }
+                            // if (arraytick[index].code_bar) {
+                            //     poids = arraytick[index].code_bar.slice(7, 12);
+                            //     if (arraytick[index].unite == "kg" && arraytick[index].code_bar.startsWith(
+                            //             "21") && arraytick[index].code_bar.length > 7) {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                            //             .prix * ((poids * arraytick[index].qte) / 1000)));
+                            //     } else if (arraytick[index].unite == "g" && arraytick[index].code_bar
+                            //         .startsWith("21") && arraytick[index].code_bar.length > 7) {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat((arraytick[index]
+                            //             .prix * poids));
+                            //     } else {
+                            //         totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
+                            //             .prix);
+                            //     }
 
-                            } else {
-                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index]
-                                    .prix);
+                            // } else {
+                                totalTicketDH = parseFloat(totalTicketDH) + parseFloat(arraytick[index].prix);
 
-                            }
+                            // }
                         });
                         $.each(arraytick, function(key, value) {
-                            quantité = 0
-                            if (value.code_bar) {
-                                if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar
-                                    .length > 7) {
-                                    poids = 0;
-                                    poids = value.code_bar.slice(7, 12);
-                                    quantité = (value.qte * poids) / 1000;
-                                } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
-                                    .code_bar.length > 7) {
-                                    poids = 0;
-                                    poids = value.code_bar.slice(7, 12);
-                                    quantité = value.qte * poids;
-                                } else {
-                                    quantité = value.qte;
+                            // quantité = 0
+                            // if (value.code_bar) {
+                            //     if (value.unite == "kg" && value.code_bar.startsWith("21") && value.code_bar
+                            //         .length > 7) {
+                            //         poids = 0;
+                            //         poids = value.code_bar.slice(7, 12);
+                            //         quantité = (value.qte * poids) / 1000;
+                            //     } else if (value.unite == "g" && value.code_bar.startsWith("21") && value
+                            //         .code_bar.length > 7) {
+                            //         poids = 0;
+                            //         poids = value.code_bar.slice(7, 12);
+                            //         quantité = value.qte * poids;
+                            //     } else {
+                            //         quantité = value.qte;
 
-                                }
-                            } else {
-                                quantité = value.qte;
-                            }
+                            //     }
+                            // } else {
+                            //     quantité = value.qte;
+                            // }
 
                             $(body_ticket).append(`
         							<div class='info clearfix suprimerart ${value.type_prod != 3 ? 'hide_bar' : '' } ${value.type_prod != 1 ? 'hide_kitchen' : '' } '  data-id="${value.idProd}">
         								<div class='wp'> ${value.name}</div>
-        								<div class='wp'> x ${quantité.toFixed(2)} </div>
+        								<div class='wp'> x ${value.qte.toFixed(2)} </div>
         								<div class='wp'>${value.prix.toFixed(2)}  </div>
                                         <div class='wp'>${0}</div>
         							</div>`);
@@ -2414,16 +2428,16 @@
             function changeRemise() {
                 var remise = $("#remise").val() > 0 ? $("#remise").val() : $('#hidden_remise_model').val();
                 //var totalTic = $('#total_a_payer').val();
-                var re_total += remise * parseInt($("#qte_scan").val()) ; 
+                // var re_total += remise * parseInt($("#qte_scan").val()) ; 
                 if (remise > 0) {
                     $('#Remise_ticket').show();
                     if (remise <= remise_max) {
                         $('#Remise_ticket').html(
-                            `<h2>Remise : <p>${re_total}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                            `<h2>Remise : <p>${remise}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
                         );
                     } else {
                         $('#Remise_ticket').html(
-                            `<h2>Remise : <p>${re_total}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
+                            `<h2>Remise : <p>${remise_max}%</p> <br> Montant :  <p> ${((totalTicketDH)).toFixed(2) }</p></h2>`
                         );
                     }
 
