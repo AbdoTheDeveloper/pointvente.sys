@@ -15,7 +15,7 @@ use App\Model\Categorie;
 use App\Model\Prod;
 use App\Model\Operation_prod;
 use App\Model\Fornisseur;
-
+use DB; 
 use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +38,7 @@ class UserController  extends Controller
 
 
 
+    
     public function index()
     {
       
@@ -60,8 +61,8 @@ class UserController  extends Controller
         
 
          
-        $classes_arr = Prod::where('qte','<=','qte_alert')->get();
-        // dd() ; 
+        $classes_arr = DB::table('prods')->select('*')->where("qte", "<=" , "qte_alert")->get() ; 
+        
 
         $classes = Travailleur::all()->count();
 

@@ -1,5 +1,4 @@
-@extends('Admin.main')
-@section('script')
+<?php $__env->startSection('script'); ?>
     <script type="text/javascript">
         $(document).ready(function() {
             $(".fileupload").on("change", function(event) {
@@ -13,11 +12,11 @@
             }
         });
     </script>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!-- Header Layout Content -->
     <!-- Header Layout Content -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
     <div class="mdk-drawer-layout__content page ">
         <div class="container-fluid page__container">
             <br><br>
@@ -36,7 +35,7 @@
                                         Ajouter une nouveau produit
                                     </div>
                                     <div class="media-right  col-md-4 mt-2 mt-xs-plus-0 ">
-                                        <a class="btn btn-success pull-right" href="{{ route('admin.index_article') }} "> <i
+                                        <a class="btn btn-success pull-right" href="<?php echo e(route('admin.index_article')); ?> "> <i
                                                 class="fa fa-list"></i>&nbsp;Tous les articles</a>
                                     </div>
                                 </div>
@@ -47,30 +46,33 @@
                                 <h4 class="card-title">Nouveau article</h4>
                             </div>
                             <div class="card-body">
-                                @if ($errors->any())
+                                <?php if($errors->any()): ?>
                                     <div class="alert alert-danger alert-styled-left login-form">
                                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
                                                 class="sr-only">Close</span></button>
                                         <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li> <span class="text-semibold"> {{ $error }}</span></li>
-                                            @endforeach
+                                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li> <span class="text-semibold"> <?php echo e($error); ?></span></li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     </div>
-                                @endif
-                                <form method="POST" action="{{ route('admin.store_article') }}"
+                                <?php endif; ?>
+                                <form method="POST" action="<?php echo e(route('admin.store_article')); ?>"
                                     enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    @if (session('message'))
+                                    <?php echo e(csrf_field()); ?>
+
+                                    <?php if(session('message')): ?>
                                         <div class="alert alert-success">
-                                            {{ session('message') }}
+                                            <?php echo e(session('message')); ?>
+
                                         </div>
-                                    @endif
-                                    @if (session('message_error'))
+                                    <?php endif; ?>
+                                    <?php if(session('message_error')): ?>
                                         <div class="alert alert-danger">
-                                            {{ session('message_error') }}
+                                            <?php echo e(session('message_error')); ?>
+
                                         </div>
-                                    @endif
+                                    <?php endif; ?>
                                     <div class="form-group row">
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Image :</label>
                                         <div class="col-sm-9">
@@ -92,11 +94,12 @@
                                             data-select2-id="1" tabindex="-1" aria-hidden="true" name="id_frns"
                                             id="fournisseur">
                                             <option value="0">-----------</option>
-                                            @foreach ($fournisseurs as $fournisseur)
-                                                <option value="{{ $fournisseur->id }}"
-                                                    data-val="{{ $fournisseur->nom_frns }}">{{ $fournisseur->nom_frns }}
+                                            <?php $__currentLoopData = $fournisseurs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fournisseur): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($fournisseur->id); ?>"
+                                                    data-val="<?php echo e($fournisseur->nom_frns); ?>"><?php echo e($fournisseur->nom_frns); ?>
+
                                                 </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                     <div class="form-group row">
@@ -104,12 +107,12 @@
                                             article:</label>
                                         <div class="col-sm-9">
                                             <select class="form-control select2-single  " name="id_cat" id="id_cat">
-                                                @foreach ($cats as $cat)
+                                                <?php $__currentLoopData = $cats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option <?php if (Request::old('id_cat') == $cat->id) {
                                                         echo 'selected';
-                                                    } ?> value="{{ $cat->id }}">
-                                                        {{ $cat->nom_cat }}</option>
-                                                @endforeach
+                                                    } ?> value="<?php echo e($cat->id); ?>">
+                                                        <?php echo e($cat->nom_cat); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
                                     </div>
@@ -134,7 +137,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">lebelle article
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="lebelle" value="{{ Request::old('lebelle') }}" name="lebelle"
+                                            <input id="lebelle" value="<?php echo e(Request::old('lebelle')); ?>" name="lebelle"
                                                 type="text" class="form-control" placeholder="lebelle article">
                                         </div>
                                     </div>
@@ -142,7 +145,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Code bar article
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="code_bar" value="{{ Request::old('code_bar') }}" name="code_bar"
+                                            <input id="code_bar" value="<?php echo e(Request::old('code_bar')); ?>" name="code_bar"
                                                 type="text" class="form-control" placeholder="Code bar article">
                                         </div>
                                     </div>
@@ -170,7 +173,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Prix Achat
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="prix_achat" value="{{ Request::old('prix_achat') }}"
+                                            <input id="prix_achat" value="<?php echo e(Request::old('prix_achat')); ?>"
                                                 name="prix_achat" type="text" class="form-control"
                                                 placeholder="prix achat article">
                                         </div>
@@ -179,7 +182,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Prix vente
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="prix_vente" value="{{ Request::old('prix_vente') }}"
+                                            <input id="prix_vente" value="<?php echo e(Request::old('prix_vente')); ?>"
                                                 name="prix_vente" type="text" class="form-control"
                                                 placeholder="prix vente article">
                                         </div>
@@ -188,7 +191,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Quantité
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="qte" value="{{ Request::old('qte') }}" name="qte"
+                                            <input id="qte" value="<?php echo e(Request::old('qte')); ?>" name="qte"
                                                 type="text" class="form-control" placeholder="Quantité ">
                                         </div>
                                     </div>
@@ -196,7 +199,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Quantité alerte
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="qte_alert" value="{{ Request::old('qte_alert') }}"
+                                            <input id="qte_alert" value="<?php echo e(Request::old('qte_alert')); ?>"
                                                 name="qte_alert" type="text" class="form-control"
                                                 placeholder="Quantité alerte">
                                         </div>
@@ -205,7 +208,7 @@
                                         <label for="quiz_title" class="col-sm-3 col-form-label form-label">Remise Max
                                             :</label>
                                         <div class="col-sm-9">
-                                            <input id="remise_max" value="{{ Request::old('remise_max') }}"
+                                            <input id="remise_max" value="<?php echo e(Request::old('remise_max')); ?>"
                                                 name="remise_max" type="text" class="form-control"
                                                 placeholder="Remise Max">
                                         </div>
@@ -221,7 +224,9 @@
                     </div>
                 </div>
             </div>
-            @include('Admin.inc.footer')
+            <?php echo $__env->make('Admin.inc.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Admin.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\pointvente.sys\resources\views/Admin/article/add.blade.php ENDPATH**/ ?>

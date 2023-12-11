@@ -82,7 +82,7 @@
                                                                   }
                                                                   
                                                                   ?></td>
-                                                              <td><?php echo e($item->qte); ?></td>
+                                                              <td><?php echo e($item->qteEntrer); ?></td>
                                                               <td><?php echo e($item->prixEntre); ?></td>
                                                               <td>
                                                                 <a  href="<?php echo e(route('admin.detail.stock.delete',["id"=>$item->iddetail])); ?>" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément');" class="btn btn-danger btn-sm">

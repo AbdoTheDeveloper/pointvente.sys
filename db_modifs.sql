@@ -1,0 +1,1 @@
+ALTER TABLE `prods` ADD `id_frns` INT(11) NOT NULL AFTER `updated_at`;

@@ -1,5 +1,4 @@
-@extends('Admin.main')
-@section('content')
+<?php $__env->startSection('content'); ?>
       <!-- Header Layout Content -->
          <!-- Header Layout Content -->
                 <div class="mdk-drawer-layout__content page ">
@@ -20,7 +19,7 @@
                                                         Ajouter un nouveau produit 
                                                     </div>
                                                     <div class="media-right  col-md-4 mt-2 mt-xs-plus-0 ">
-                                                        <a class="btn btn-success pull-right" href="{{ route('admin.detail.stock.index',['id' =>$id ]) }} "> <i class="fa fa-list"></i>&nbsp;Tous les niveaux</a>
+                                                        <a class="btn btn-success pull-right" href="<?php echo e(route('admin.detail.stock.index',['id' =>$id ])); ?> "> <i class="fa fa-list"></i>&nbsp;Tous les niveaux</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -31,15 +30,16 @@
                                             </div>
                                             <div class="card-body">
                                                 <form method="" >
-                                                     {{ csrf_field() }}
-                                                <input type="hidden" id ="id_operationStock" name="id_operationStock" value="{{$id}}" >
+                                                     <?php echo e(csrf_field()); ?>
+
+                                                <input type="hidden" id ="id_operationStock" name="id_operationStock" value="<?php echo e($id); ?>" >
                                                      <div class="form-group">
                                                         <label for="exampleInputName1">Categorie</label>
                                                         <select class="form-control select2-single   select2-single cat" data-select2-id="1" tabindex="-1" aria-hidden="true" name="id_cat" id="id_cat">
                                                           <option value="0">-----------</option>
-                                                          @foreach($cats as $cat)
-                                                        <option value="{{ $cat->id }}">{{ $cat->nom_cat }}</option>
-                                                          @endforeach
+                                                          <?php $__currentLoopData = $cats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($cat->id); ?>"><?php echo e($cat->nom_cat); ?></option>
+                                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                       </select>
                                                       </div>
                                                       <div class="form-group">
@@ -49,31 +49,22 @@
                                                       </div>
                                                       <div class="form-group">
                                                         <label for="exampleInputqte">Date Operation</label>
-                                                        <input type="date" class="form-control date_opt " value="{{date('Y-m-d')}}" id="date_opt" placeholder="date Operation" name="date_opt" style="padding: 2em;">
+                                                        <input type="date" class="form-control date_opt " value="<?php echo e(date('Y-m-d')); ?>" id="date_opt" placeholder="date Operation" name="date_opt" style="padding: 2em;">
                                                       </div>
-                                                    {{-- <div class="form-group row">
-                                                        <div class="col-6">
-                                                        <label for="exampleInputqte">Quantité</label>
-                                                        <input type="number" class="form-control qte" id="exampleInputqte" placeholder="Quantité" name="qte" style="padding: 2em;" value="{{ old('prix') }}" step="any">
-                                                        </div>
-                                                        <div class="col-6">
-                                                        <label for="exampleInputprix">Prix</label>
-                                                        <input type="number" class="form-control prixEntre" id="exampleInputprix" placeholder="prix" name="prix" style="padding: 2em;" value="{{ old('prix') }}" step="any">
-                                                        </div>
-                                                    </div> --}}
+                                                    
                                                     <div class="form-group row">
                                                         <div class="col-6">
                                                           <label for="exampleInputqte">Quantité</label>
-                                                          <input type="number" class="form-control qte" id="exampleInputqte" placeholder="Quantité" name="qte" style="padding: 2em;" value="{{ old('qte') }}" step="any">
+                                                          <input type="number" class="form-control qte" id="exampleInputqte" placeholder="Quantité" name="qte" style="padding: 2em;" value="<?php echo e(old('qte')); ?>" step="any">
                                                         </div>
                                                         <div class="col-3">
                                                           <label for="exampleInputprix">Prix</label>
-                                                          <input type="number" class="form-control prix" id="exampleInputprix" placeholder="prix" name="prix" style="padding: 2em;" value="{{ old('prixEntre') }}" step="any">
+                                                          <input type="number" class="form-control prix" id="exampleInputprix" placeholder="prix" name="prix" style="padding: 2em;" value="<?php echo e(old('prixEntre')); ?>" step="any">
                                                         </div>
                                                          <div class="col-3 text-right">
                                                           <br>
-                                                          <button type="button" class="btn btn-success   ajouter" >    {{ __('Ajouter') }}</button>
-                                                          <button type="button" class="btn btn-danger   supp" >    {{ __('Supprimer') }}</button>
+                                                          <button type="button" class="btn btn-success   ajouter" >    <?php echo e(__('Ajouter')); ?></button>
+                                                          <button type="button" class="btn btn-danger   supp" >    <?php echo e(__('Supprimer')); ?></button>
                                                       </div>
                                                       </div>   
                                                       <table id="operationTable" class="table table-striped table-bordered operationTable" cellspacing="0" width="100%">
@@ -99,20 +90,20 @@
                                 </div>
                             </div>
 <br><br><br><br><br><br><br><br><br>
-                            @include('Admin.inc.footer')
+                            <?php echo $__env->make('Admin.inc.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </div>
                 </div>
-@endsection
-@section('script')
-<script src="{{url('assets/plugins/sweet-alert2/sweetalert2.min.js')}}"></script>
-<script src="{{url('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{url('assets/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+<script src="<?php echo e(url('assets/plugins/sweet-alert2/sweetalert2.min.js')); ?>"></script>
+<script src="<?php echo e(url('assets/plugins/datatables/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(url('assets/plugins/datatables/dataTables.bootstrap4.min.js')); ?>"></script>
 <script>
   $(document).ready(function() {
 $('.cat').change(function(){
     idcat = $("select#id_cat option").filter(":selected").val();
     $.ajax({
-            url: "{{ route('admin.get_articles_stock') }}",
+            url: "<?php echo e(route('admin.get_articles_stock')); ?>",
             type: 'get',
             dataType: "json",
             data: {id:idcat},
@@ -199,7 +190,7 @@ $('.cat').change(function(){
 
             });
                  $.ajax({
-                    url: "{{ route('admin.detail.stock.save') }}",
+                    url: "<?php echo e(route('admin.detail.stock.save')); ?>",
                     type: 'post', 
                     data: {
                       // id_frns : $('#fournisseur').val(),
@@ -207,7 +198,7 @@ $('.cat').change(function(){
                       operation:operation,
                       remarque:remarque,
                       date_opt:date_opt,
-                      _token: '{!! csrf_token() !!}',
+                      _token: '<?php echo csrf_token(); ?>',
                       },
                     success: function (data)
                     {
@@ -222,4 +213,6 @@ $('.cat').change(function(){
           });
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Admin.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\pointvente.sys\resources\views/Admin/stock/detail/add.blade.php ENDPATH**/ ?>
